@@ -2,15 +2,15 @@ public class Room {
 
    //Atributes
    private int RoomID;
-   private int numofbeds;
+   private int numOfBeds;
    private boolean internet;
    private int floor;
    private int price;
    private boolean availability;
    
-   public Room(int RoomID, int numofbeds, boolean internet, int floor, int price, boolean avaiability){
+   public Room(int RoomID, int numOfBeds, boolean internet, int floor, int price, boolean avaiability){
        this.RoomID = RoomID;
-       this.numofbeds = numofbeds;
+       this.numOfBeds = numOfBeds;
        this.internet = internet;
        this.phonenumber = phonenumber;
        this.GuestID = GuestID;
@@ -23,17 +23,16 @@ public class Room {
        return RoomID;
    }
    
-   public void setRoomID(int RoomID)
-   {
+   public void setRoomID(int RoomID)   {
        this.RoomID = RoomID;
    }
-   public int getNumofBeds()  {
-       return numofbeds;
+   
+   public int getNumOfBeds()  {
+       return numOfBeds;
    }
    
-   public void setNumofBeds(int numofbeds)
-   {
-       this.numofbeds = numofbeds;
+   public void setNumOfBeds(int numOfBeds)   {
+       this.numOfBeds = numOfBeds;
    }
 
 }
