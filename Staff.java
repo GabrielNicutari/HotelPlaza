@@ -13,9 +13,16 @@ public class Staff {
    //constructors
    public Staff() {}
    
-   /* Staff() {
-      
-   }*/
+    Staff(String firstName, String lastName, String role, String address, String phoneNumber, String cpr, int hours, int salary) {
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.role = role;
+      this.address = address;
+      this.phoneNumber;
+      this.cpr = cpr;
+      this.hours = hours;
+      this.salary = salary;      
+   }
    
    
    //setters
