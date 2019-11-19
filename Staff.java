@@ -88,4 +88,8 @@ public class Staff {
    
    //methods
    
+   public String toString() {
+      return "First Name: " + firstName + ", Last Name: " + lastName + ", Title: " + title + ", Address: " + address + 
+             ", Phone Number: " + phoneNumber + "CPR: " + cpr + "\nHours: " + hours + ", Salary: " + salary;
+   }
 }
