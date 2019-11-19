@@ -1,7 +1,5 @@
 public class Room {
    private int RoomID;
-<<<<<<< HEAD
-=======
    private int numOfBeds;
    private boolean internet;
    private int floor;
@@ -67,7 +65,4 @@ public class Room {
    public String toString()   {
       return RoomID + " " + numOfBeds + " " + internet + " " + floor + " " + price + " " + availability;
    }
-
-
->>>>>>> master
 }
