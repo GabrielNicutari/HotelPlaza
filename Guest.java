@@ -7,8 +7,7 @@ public class Guest implements personalinfo {
    private String phonenumber;
    private int GuestID;
 
-   public Guest(String firstName, String lastName, String address, String phonenumber, int GuestID)
-   {
+   public Guest(String firstName, String lastName, String address, String phonenumber, int GuestID)   {
        this.lastName = lastName;
        this.firstName = firstName;
        this.address = address;
@@ -16,60 +15,52 @@ public class Guest implements personalinfo {
        this.GuestID = GuestID;
    }
 
-       public Guest() {}
+   public Guest() {}
  
    //Getters and setters
-   public String getFirstName()
-   {
+   public String getFirstName()  {
        return firstName;
    }
+   
    public void setFirstName(String firstName)
    {
        this.firstName = firstName;
    }
 
-   public String getLastName()
-   {
+   public String getLastName()   {
        return lastName;
    }
 
-   public void setLastName(String lastName)
-   {
+   public void setLastName(String lastName)  {
        this.lastName = lastName;
    }
 
-   public  String getAddress()
-   {
+   public  String getAddress()   {
        return address;
    }
 
-   public void setAddress(String address)
-   {
+   public void setAddress(String address) {
        this.address = address;
    }
 
-   public String getPhoneNumber()
-   {
+   public String getPhoneNumber()   {
        return phonenumber;
    }
 
-   public void setPhoneNumber(String phonenumber)
-   {
+   public void setPhoneNumber(String phonenumber)  {
        this.phonenumber = phonenumber;
    }
    
-   public int getGuestID ()
-   {
+   public int getGuestID ()   {
        return GuestID;
    }
-   public void setGuestID (int GuestID)
-   {
-       this. GuestID = GuestID;
+   
+   public void setGuestID (int GuestID)   {
+       this.GuestID = GuestID;
    }
    
    //To String
-   public String toString()
-   {
+   public String toString()   {
       return "Name: " + firstName + " " + lastName + " " + "Address: " + address + "  " + "Telephone no.: " + phonenumber + "GuestID:" + GuestID;
    }
 }
