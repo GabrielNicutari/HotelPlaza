@@ -27,7 +27,7 @@ public class Booking {
        this.firstName = firstName;
    }
       public int getGuestID ()
-   {
+   {  
        return GuestID;
    }
    public void setGuestID (int GuestID)
@@ -55,7 +55,10 @@ public class Booking {
    //To String
    public String toString()
    {
-      return "Name: " + firstName + "Phonenumber:" + phonenumber + "GuestID:" + GuestID + "RoomID:" + RoomID;
+      return "Name: " + firstName + " " +  
+             "Phonenumber: " + phonenumber + " "+
+             "GuestID: " + GuestID + " " + 
+             "RoomID:" + RoomID;
    } 
    
       
