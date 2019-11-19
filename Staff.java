@@ -2,7 +2,7 @@ public class Staff {
    //attributes
    private String firstName;
    private String lastName;
-   private String title;
+   private String role;
    private String address;
    private String phoneNumber;
    private String cpr;
@@ -27,8 +27,8 @@ public class Staff {
       lastName = name;
    }
    
-   public void setTitle(String title) {
-      this.title = title;
+   public void setRole(String role) {
+      this.role = role;
    }
    
    public void setAddress(String address) {
@@ -61,8 +61,8 @@ public class Staff {
       return lastName;
    }
    
-   public String getTitle() {
-      return title;
+   public String getRole() {
+      return role;
    }
    
    public String getAddress() {

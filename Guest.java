@@ -1,17 +1,17 @@
 public class Guest {
   
    //Atrributes
-   private String lastName;
    private String firstName;
+   private String lastName;
+   private String phoneNumber;
    private String address;
-   private String phonenumber;
    private int GuestID;
 
-   public Guest(String firstName, String lastName, String address, String phonenumber, int GuestID)   {
-       this.lastName = lastName;
+   public Guest(String firstName, String lastName, String address, String phoneNumber, int GuestID)   {
        this.firstName = firstName;
+       this.lastName = lastName;
+       this.phoneNumber = phoneNumber;
        this.address = address;
-       this.phonenumber = phonenumber;
        this.GuestID = GuestID;
    }
 
@@ -22,8 +22,7 @@ public class Guest {
        return firstName;
    }
    
-   public void setFirstName(String firstName)
-   {
+   public void setFirstName(String firstName)   {
        this.firstName = firstName;
    }
 
@@ -44,11 +43,11 @@ public class Guest {
    }
 
    public String getPhoneNumber()   {
-       return phonenumber;
+       return phoneNumber;
    }
 
-   public void setPhoneNumber(String phonenumber)  {
-       this.phonenumber = phonenumber;
+   public void setPhoneNumber(String phoneNumber)  {
+       this.phoneNumber = phoneNumber;
    }
    
    public int getGuestID ()   {
@@ -61,6 +60,6 @@ public class Guest {
    
    //To String
    public String toString()   {
-      return "Name: " + firstName + " " + lastName + " " + "Address: " + address + "  " + "Telephone no.: " + phonenumber + "GuestID:" + GuestID;
+      return "Name: " + firstName + " " + lastName + " " +  "Telephone no.: " + phoneNumber + "Address: " + address + "  " + "GuestID:" + GuestID;
    }
 }
