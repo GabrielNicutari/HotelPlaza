@@ -53,4 +53,9 @@ public class Guest {
    {
        this.telephoneNr = telephoneNr;
    }
+   
+   public String toString()
+   {
+      return "Name: " + firstName + " " + lastName + " " + "Address: " + address + "  " + "Telephone no.: " + telephoneNr;
+   }
 }
