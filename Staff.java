@@ -13,7 +13,7 @@ public class Staff {
    //constructors
    public Staff() {}
    
-    Staff(String firstName, String lastName, String role, String address, String phoneNumber, String cpr, int hours, int salary) {
+   public Staff(String firstName, String lastName, String role, String address, String phoneNumber, String cpr, int hours, int salary) {
       this.firstName = firstName;
       this.lastName = lastName;
       this.role = role;
