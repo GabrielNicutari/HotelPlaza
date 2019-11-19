@@ -21,7 +21,7 @@ public class Staff {
       this.phoneNumber;
       this.cpr = cpr;
       this.hours = hours;
-      this.salary = salary;      
+      this.salary = salary;    
    }
    
    
