@@ -7,7 +7,7 @@ public class Guest implements personalinfo {
    private String phonenumber;
    private int GuestID;
 
-   public Guest(String firstName, String lastName, String address, String telephoneNr, int GuestID)
+   public Guest(String firstName, String lastName, String address, String phonenumber, int GuestID)
    {
        this.lastName = lastName;
        this.firstName = firstName;
