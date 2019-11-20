@@ -7,7 +7,7 @@ public class Menu {
    
    Repository repo = new Repository();
    
-   public void displayForAdministrator() {
+   public void displayForAdministrator() throws IOException{
       int choice = -1;
       do {
          System.out.println("MAIN MENU");
@@ -47,15 +47,15 @@ public class Menu {
       } while(choice != 5);
    }
    
-   public void staffMenu() {
+   public void staffMenu() throws IOException{
       int choice = -1;
       do {
-         System.out.println("MAIN MENU");
+         System.out.println("STAFF MENU");
          System.out.println("****************************");
          System.out.println("Choose an option: ");
-         System.out.println("[1] Create");
-         System.out.println("[2] Search");
-         System.out.println("[3] Display");
+         System.out.println("[1] Display");
+         System.out.println("[2] Create");
+         System.out.println("[3] Search");     
          System.out.println("[4] Back To Main Menu");
          System.out.println("============================");
          
@@ -64,14 +64,13 @@ public class Menu {
          
          switch(choice) {
             case 1:
-               repo.createStaff();
+               //display
                break;
             case 2:
-               System.out.println("2");
-               //searchStaff();
+               repo.createStaff();
                break;
             case 3:
-               //displayStaff;
+               searchStaff();
             case 4:
                break;
             default:
@@ -83,36 +82,39 @@ public class Menu {
    public void roomsMenu() {
       int choice = -1;
       do {
-         System.out.println("MAIN MENU");
+         System.out.println("ROOMS MENU");
          System.out.println("****************************");
          System.out.println("Choose an option: ");
-         System.out.println("[1] Create");
-         System.out.println("[2] Search");
-         System.out.println("[3] Back To Main Menu");
+         System.out.println("[1] Display");
+         System.out.println("[2] Create");
+         System.out.println("[3] Search");
+         System.out.println("[4] Back To Main Menu");
          System.out.println("============================");
          
-         choice = validateInput(choice, 3);
+         choice = validateInput(choice, 4);
          
          switch(choice) {
             case 1:
-               //createRooms();
+               //display
                break;
             case 2:
-               System.out.println("2");
-               //searchRooms();
+               //create
                break;
             case 3:
+               searchRooms();
+               break;
+            case 4:
                break;
             default:
-               System.out.println("Choice must be a value between \"1\" and \"3\".");
+               System.out.println("Choice must be a value between \"1\" and \"4\".");
          }
-      }while(choice != 3);
+      }while(choice != 4);
    }
    
    public void guestsMenu()   {
       int choice = -1;
       do {
-         System.out.println("MAIN MENU");
+         System.out.println("GUESTS MENU");
          System.out.println("****************************");
          System.out.println("Choose an option: ");
          System.out.println("[1] Display");
@@ -124,10 +126,10 @@ public class Menu {
          
          switch(choice) {
             case 1:
-               //createStaff();
+               //display
                break;
             case 2:
-               //searchStaff();
+               searchGuests();
                break;
             case 3:
                break;
@@ -138,6 +140,80 @@ public class Menu {
    }
    
    public void bookingsMenu() {
+      int choice = -1;
+      do {
+         System.out.println("BOOKINGS MENU");
+         System.out.println("****************************");
+         System.out.println("Choose an option: ");
+         System.out.println("[1] Display");
+         System.out.println("[2] Create");
+         System.out.println("[3] Search");
+         System.out.println("[4] Back To Main Menu");
+         System.out.println("============================");
+         
+         choice = validateInput(choice,4);
+         
+         switch(choice) {
+            case 1:
+               //display;
+               break;
+            case 2:
+               //Create;
+               break;
+            case 3:
+               searchBookings();
+               break;
+            case 4:
+               break;
+            default:
+               System.out.println("Choice must be a value between \"1\" and \"4\".");
+         }
+      }while(choice != 4);
+   }
+   
+   public void searchStaff()  {
+      int choice = -1;
+      do {
+         System.out.println("SEARCH STAFF MENU");
+         System.out.println("****************************");
+         
+         //repo.searchStaff();
+         
+         System.out.println("Choose an option: ");
+         System.out.println("[1] Update");
+         System.out.println("[2] Delete");
+         System.out.println("[3] Back To Main Menu");
+         System.out.println("============================");
+         
+         choice = validateInput(choice,3);
+         
+         switch(choice) {
+            case 1:
+               //createStaff();
+               break;
+            case 2:
+               //Create;
+               break;
+            case 3:
+               //Search
+               break;
+            case 4:
+               break;
+            default:
+               System.out.println("Choice must be a value between \"1\" and \"4\".");
+         }
+      }while(choice != 4);
+   }  
+   
+   public void searchRooms()  {
+      
+   }
+   
+   public void searchGuests() {
+   
+   }
+   
+   public void searchBookings()  {
    
    }
    
