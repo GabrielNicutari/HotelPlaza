@@ -250,43 +250,92 @@ public class Menu {
          System.out.println("");
          
          //repo.searchRoom();
+         chooseRoomFilter();
          
          System.out.println("Choose an option: ");
-         System.out.println("[1] Update");
-         System.out.println("[2] Delete");
-         System.out.println("[3] Back To Main Menu");
+         System.out.println("[1] Further filter");
+         System.out.println("[2] Update");
+         System.out.println("[3] Delete");
+         System.out.println("[4] Back To Main Menu");
          System.out.println("============================");
          
-         choice = validateInput(choice,3);
+         choice = validateInput(choice,4);
          
          switch(choice) {
             case 1:
+               // goes through the loop again
+               break;
+            case 2:
                printEmptyLines();
                //repo.updateStaff();
                printEmptyLines();
                break;
-            case 2:
+            case 3:
                printEmptyLines();
                //repo.deleteStaff();
                printEmptyLines();
                break;
+            case 4:
+               break;
+            default:
+               printEmptyLines();
+               System.out.println("Choice must be a value between \"1\" and \"4\".");
+         }
+      }while(choice != 4);
+   }
+   
+   public void chooseRoomFilter()   {
+      int choice = -1;
+      do {
+         System.out.println("****************************");
+         System.out.println("Choose a filter: ");
+         System.out.println("[1] Number of beds");
+         System.out.println("[2] Internet connection");
+         System.out.println("[3] Floor");
+         System.out.println("[4] Price");
+         System.out.println("[5] Go back");
+         System.out.println("============================");
+         
+         choice = validateInput(choice,5);
+         
+         switch(choice) {
+            case 1:
+               printEmptyLines();
+               //repo.displayRoom("beds");
+               printEmptyLines();
+               break;
+            case 2:
+               printEmptyLines();
+               //repo.displayRoom("internet");
+               printEmptyLines();
+               break;
             case 3:
+               printEmptyLines();
+               //repo.displayRoom("floor");
+               printEmptyLines();
+               break;
+            case 4:
+               printEmptyLines();
+               //repo.displayRoom("price");
+               printEmptyLines();
+               break;
+            case 5:
                break;
             default:
                printEmptyLines();
                System.out.println("Choice must be a value between \"1\" and \"3\".");
          }
-      }while(choice != 3);
+      }while(choice != 5);
    }
    
    public void searchGuest() {
       int choice = -1;
       do {
-         System.out.println("SEARCH STAFF MENU");
+         System.out.println("SEARCH GUEST MENU");
          System.out.println("****************************");
          System.out.println("Type the first name or the CPR (ddmmyy-xxxx) of the staff member.");
          
-         //repo.searchStaff();
+         //repo.searchGuest();
          
          System.out.println("Choose an option: ");
          System.out.println("[1] Update");
@@ -299,12 +348,12 @@ public class Menu {
          switch(choice) {
             case 1:
                printEmptyLines();
-               //repo.updateStaff();
+               //updateGuest();  //Another menu
                printEmptyLines();
                break;
             case 2:
                printEmptyLines();
-               //repo.deleteStaff();
+               //repo.deleteGuest();
                printEmptyLines();
                break;
             case 3:
