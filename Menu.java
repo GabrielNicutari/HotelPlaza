@@ -1,5 +1,7 @@
 import java.util.*;
 import java.io.*;
+import java.text.*;
+import java.time.format.DateTimeFormatter;
 
 public class Menu {
    
@@ -7,7 +9,7 @@ public class Menu {
    
    Repository repo = new Repository();
    
-   public void displayForAdministrator() throws IOException{
+   public void displayForAdministrator() throws IOException, ParseException{
       int choice = -1;
       do {
          System.out.println("MAIN MENU");
@@ -24,24 +26,29 @@ public class Menu {
          
          switch(choice) {
             case 1:
-               System.out.println("1");
+               printEmptyLines();
                staffMenu();
+               printEmptyLines();
                break;
             case 2:
-               System.out.println("2");
-               roomsMenu();
+               printEmptyLines();
+               roomMenu();
+               printEmptyLines();
                break;
             case 3:
-               System.out.println("3");
-               guestsMenu();
+               printEmptyLines();
+               guestMenu();
+               printEmptyLines();
                break;
             case 4:
-               System.out.println("4");
-               bookingsMenu();
+               printEmptyLines();
+               bookingMenu();
+               printEmptyLines();
                break;
             case 5:
                break;
             default:
+               printEmptyLines();
                System.out.println("Choice must be a value between \"1\" and \"5\".");
          }
       } while(choice != 5);
@@ -64,22 +71,29 @@ public class Menu {
          
          switch(choice) {
             case 1:
+               printEmptyLines();
                //display
+               printEmptyLines();
                break;
             case 2:
+               printEmptyLines();
                repo.createStaff();
+               printEmptyLines();
                break;
             case 3:
+               printEmptyLines();
                searchStaff();
+               printEmptyLines();
             case 4:
                break;
             default:
+               printEmptyLines();
                System.out.println("Choice must be a value between \"1\" and \"4\".");
          }
       } while(choice != 4);
    }
    
-   public void roomsMenu() {
+   public void roomMenu() {
       int choice = -1;
       do {
          System.out.println("ROOMS MENU");
@@ -95,23 +109,30 @@ public class Menu {
          
          switch(choice) {
             case 1:
+               printEmptyLines();
                //display
+               printEmptyLines();
                break;
             case 2:
+               printEmptyLines();
                //create
+               printEmptyLines();
                break;
             case 3:
-               searchRooms();
+               printEmptyLines();
+               searchRoom();
+               printEmptyLines();
                break;
             case 4:
                break;
             default:
+               printEmptyLines();
                System.out.println("Choice must be a value between \"1\" and \"4\".");
          }
       }while(choice != 4);
    }
    
-   public void guestsMenu()   {
+   public void guestMenu()   {
       int choice = -1;
       do {
          System.out.println("GUESTS MENU");
@@ -126,20 +147,25 @@ public class Menu {
          
          switch(choice) {
             case 1:
+               printEmptyLines();
                //display
+               printEmptyLines();
                break;
             case 2:
-               searchGuests();
+               printEmptyLines();
+               searchGuest();
+               printEmptyLines();
                break;
             case 3:
                break;
             default:
+               printEmptyLines();
                System.out.println("Choice must be a value between \"1\" and \"3\".");
          }
       }while(choice != 3);
    }
    
-   public void bookingsMenu() {
+   public void bookingMenu() throws IOException, ParseException{
       int choice = -1;
       do {
          System.out.println("BOOKINGS MENU");
@@ -155,27 +181,36 @@ public class Menu {
          
          switch(choice) {
             case 1:
+               printEmptyLines();
                //display;
+               printEmptyLines();
                break;
             case 2:
-               //Create;
+               printEmptyLines();
+               repo.createGuest();
+               repo.createBooking();
+               printEmptyLines();
                break;
             case 3:
-               searchBookings();
+               printEmptyLines();
+               searchBooking();
+               printEmptyLines();
                break;
             case 4:
                break;
             default:
+               printEmptyLines();
                System.out.println("Choice must be a value between \"1\" and \"4\".");
          }
       }while(choice != 4);
    }
    
-   public void searchStaff()  {
+   public void searchStaff()  throws IOException{
       int choice = -1;
       do {
          System.out.println("SEARCH STAFF MENU");
          System.out.println("****************************");
+         System.out.println("Type the first name or the CPR (ddmmyy-xxxx) of the staff member.");
          
          //repo.searchStaff();
          
@@ -189,33 +224,183 @@ public class Menu {
          
          switch(choice) {
             case 1:
-               //createStaff();
+               printEmptyLines();
+               updateStaff();
+               printEmptyLines();
                break;
             case 2:
-               //Create;
+               printEmptyLines();
+               //repo.deleteStaff();
+               printEmptyLines();
                break;
             case 3:
-               //Search
-               break;
-            case 4:
                break;
             default:
-               System.out.println("Choice must be a value between \"1\" and \"4\".");
+               printEmptyLines();
+               System.out.println("Choice must be a value between \"1\" and \"3\".");
          }
-      }while(choice != 4);
+      }while(choice != 3);
    }  
    
-   public void searchRooms()  {
+   public void searchRoom()  {
+      int choice = -1;
+      do {
+         System.out.println("SEARCH ROOM MENU");
+         System.out.println("****************************");
+         System.out.println("");
+         
+         //repo.searchRoom();
+         
+         System.out.println("Choose an option: ");
+         System.out.println("[1] Update");
+         System.out.println("[2] Delete");
+         System.out.println("[3] Back To Main Menu");
+         System.out.println("============================");
+         
+         choice = validateInput(choice,3);
+         
+         switch(choice) {
+            case 1:
+               printEmptyLines();
+               //repo.updateStaff();
+               printEmptyLines();
+               break;
+            case 2:
+               printEmptyLines();
+               //repo.deleteStaff();
+               printEmptyLines();
+               break;
+            case 3:
+               break;
+            default:
+               printEmptyLines();
+               System.out.println("Choice must be a value between \"1\" and \"3\".");
+         }
+      }while(choice != 3);
+   }
+   
+   public void searchGuest() {
+      int choice = -1;
+      do {
+         System.out.println("SEARCH STAFF MENU");
+         System.out.println("****************************");
+         System.out.println("Type the first name or the CPR (ddmmyy-xxxx) of the staff member.");
+         
+         //repo.searchStaff();
+         
+         System.out.println("Choose an option: ");
+         System.out.println("[1] Update");
+         System.out.println("[2] Delete");
+         System.out.println("[3] Back To Main Menu");
+         System.out.println("============================");
+         
+         choice = validateInput(choice,3);
+         
+         switch(choice) {
+            case 1:
+               printEmptyLines();
+               //repo.updateStaff();
+               printEmptyLines();
+               break;
+            case 2:
+               printEmptyLines();
+               //repo.deleteStaff();
+               printEmptyLines();
+               break;
+            case 3:
+               break;
+            default:
+               printEmptyLines();
+               System.out.println("Choice must be a value between \"1\" and \"3\".");
+         }
+      }while(choice != 3);
+   }
+   
+   public void searchBooking()  {
+   
+   }
+   
+   public void updateStaff()  throws IOException{
+      BufferedReader console = new BufferedReader (new InputStreamReader(System.in)); 
       
-   }
+      System.out.println("Type the ID of the staff member you want to modify ");
+      int toUpdate = console.read();
+      
+      //repo.updateStaff(toUpdate,"choose");
+      int choice = -1;
+      do {
+          System.out.println();
+          System.out.println("Choose what to modify: ");
+          System.out.println("[1] First Name ");
+          System.out.println("[2] Last Name");
+          System.out.println("[3] Job");
+          System.out.println("[4] Address");
+          System.out.println("[5] Phone Number");
+          System.out.println("[6] CPR");
+          System.out.println("[7] Hours");
+          System.out.println("[8] Salary");
+          System.out.println("[9] Everything");
+          System.out.println("[10] Go back");
+               
+          choice = validateInput(choice,10);
+          switch(choice) {
+            case 1:
+               printEmptyLines();
+               //repo.updateStaff(toUpdate,"firstName");
+               printEmptyLines();
+               break;
+            case 2:
+               printEmptyLines();
+               //repo.updateStaff(toUpdate,"lastName");
+               printEmptyLines();
+               break;
+            case 3:
+               printEmptyLines();
+               //repo.updateStaff(toUpdate,"job");
+               printEmptyLines();
+               break;
+            case 4:
+               printEmptyLines();
+               //repo.updateStaff(toUpdate,"address");
+               printEmptyLines();
+               break;
+            case 5:
+               printEmptyLines();
+               //repo.updateStaff(toUpdate,"phoneNumber");
+               printEmptyLines();
+               break;
+            case 6:
+               printEmptyLines();
+               //repo.updateStaff(toUpdate,"CPR"); 
+               printEmptyLines();     
+               break;
+            case 7:
+               printEmptyLines();
+               //repo.updateStaff(toUpdate,"hours");
+               printEmptyLines();
+               break;
+            case 8:
+               printEmptyLines();
+               //repo.updateStaff(toUpdate,"salary");
+               printEmptyLines();
+               break;
+            case 9:
+               printEmptyLines();
+               //repo.updateStaff(toUpdate,"hours");
+               printEmptyLines();
+               break;
+            case 10:
+               printEmptyLines();
+              // repo.updateStaff(toUpdate,"everything");
+               printEmptyLines();
+               break;
+            default:
+               printEmptyLines();
+               System.out.println("Choice must be a value between \"1\" and \"10\".");
+          }
+      }  while(choice != 10);
+   }             
    
-   public void searchGuests() {
-   
-   }
-   
-   public void searchBookings()  {
-   
-   }
    
    public int validateInput(int choice, int lastChoice)  {
       Scanner console = new Scanner(System.in);
@@ -226,5 +411,29 @@ public class Menu {
       }
       choice = console.nextInt();
       return choice;
+   }
+   
+   public void printEmptyLines() {
+      for(int i = 0; i < 5; i++)   {
+         System.out.println();
+      }
+   }
+   
+   public void doesStop() {
+      Scanner console = new Scanner(System.in);
+      System.out.println("Do you want to do anything else? (Type \"Y\" or \"N\")");
+      
+      String input = console.next();
+      while(isNotYesOrNO(input)) {     //Input Validation
+         input = console.next(); 
+      }
+      
+      if(input.equalsIgnoreCase("N") || input.equalsIgnoreCase("NO"))   {
+         System.exit(0);
+      } 
+   }
+   
+   public boolean isNotYesOrNO(String input) {
+      return !(input.equalsIgnoreCase("N") || input.equalsIgnoreCase("NO") || input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("YES"));
    }
 }
