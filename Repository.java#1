@@ -1,0 +1,55 @@
+import java.util.*;
+import java.io.*;
+
+public class Repository {
+   
+   ArrayList<Staff> staffList = new ArrayList<>();   
+   
+   public void createStaff() throws IOException {
+      Scanner console = new Scanner(System.in);
+      Staff staff = new Staff();
+      
+      System.out.println("In order to create a new member staff, please enter the following:");
+      System.out.println("First Name: ");
+      staff.setFirstName(console.next());
+      
+      System.out.println("Last Name: ");
+      staff.setLastName(console.next());
+      
+      System.out.println("Job: ");
+      staff.setJob(console.next());
+      
+      System.out.println("Address: ");
+      staff.setAddress(console.next());
+      
+      System.out.println("Phone number: ");
+      staff.setPhoneNumber(console.next());
+      
+      System.out.println("CPR: ");
+      staff.setCpr(console.next());
+      
+      System.out.println("Working Hours: ");
+      staff.setHours(validateInput());
+      
+      System.out.println("Monthly Salary: ");
+      staff.setSalary(validateInput());
+            
+      BufferedWriter output = new BufferedWriter(new FileWriter("Staff.txt"));
+        
+   }
+   
+   public int validateInput()  {
+      Scanner console = new Scanner(System.in);
+      
+      while(!console.hasNextInt())  {
+         System.out.println("Wrong input. It has to be a number.");
+         String test = console.next();
+      }
+      int choice = console.nextInt();
+      return choice;
+   }
+
+
+}
+
+

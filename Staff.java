@@ -2,7 +2,7 @@ public class Staff {
    //attributes
    private String firstName;
    private String lastName;
-   private String title;
+   private String job;
    private String address;
    private String phoneNumber;
    private String cpr;
@@ -13,12 +13,12 @@ public class Staff {
    //constructors
    public Staff() {}
    
-   public Staff(String firstName, String lastName, String role, String address, String phoneNumber, String cpr, int hours, int salary) {
+   public Staff(String firstName, String lastName, String job, String address, String phoneNumber, String cpr, int hours, int salary) {
       this.firstName = firstName;
       this.lastName = lastName;
-      this.role = role;
+      this.job = job;
       this.address = address;
-      this.phoneNumber;
+      this.phoneNumber = phoneNumber;
       this.cpr = cpr;
       this.hours = hours;
       this.salary = salary;    
@@ -34,8 +34,8 @@ public class Staff {
       lastName = name;
    }
    
-   public void setTitle(String title) {
-      this.title = title;
+   public void setJob(String job) {
+      this.job = job;
    }
    
    public void setAddress(String address) {
@@ -68,8 +68,8 @@ public class Staff {
       return lastName;
    }
    
-   public String getTitle() {
-      return title;
+   public String getJob() {
+      return job;
    }
    
    public String getAddress() {
@@ -96,7 +96,7 @@ public class Staff {
    //methods
    
    public String toString() {
-      return "First Name: " + firstName + ", Last Name: " + lastName + ", Title: " + title + ", Address: " + address + 
-             ", Phone Number: " + phoneNumber + "CPR: " + cpr + "\nHours: " + hours + ", Salary: " + salary;
+      return firstName + "     " + lastName + "     " + job + "     " + address + "     " 
+      + phoneNumber + "     " + cpr + "     " + hours + "     " + salary;
    }
 }

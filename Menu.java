@@ -5,6 +5,8 @@ public class Menu {
    
    public Menu()  {}
    
+   Repository repo = new Repository();
+   
    public void displayForAdministrator() {
       int choice = -1;
       do {
@@ -58,10 +60,11 @@ public class Menu {
          System.out.println("============================");
          
          choice = validateInput(choice, 4);
+        
          
          switch(choice) {
             case 1:
-               //createStaff();
+               repo.createStaff();
                break;
             case 2:
                System.out.println("2");
@@ -138,7 +141,7 @@ public class Menu {
    
    }
    
-   public int validateInput(int choice, int lastChoice)   {
+   public int validateInput(int choice, int lastChoice)  {
       Scanner console = new Scanner(System.in);
       
       while(!console.hasNextInt())  {
