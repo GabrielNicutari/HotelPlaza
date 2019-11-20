@@ -1,4 +1,4 @@
-public class Guest implements personalinfo {
+public class Guest {
   
    //Atrributes
    private String lastName;

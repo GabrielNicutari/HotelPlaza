@@ -1,19 +1,24 @@
 import java.util.*;
 import java.io.*;
+import java.text.*;
+import java.time.format.DateTimeFormatter;
 
 public class Repository {
 
+   Scanner console = new Scanner(System.in);
+   
    //Arraylists
    
    ArrayList<Staff> staffList = new ArrayList<>();
    ArrayList<Room> roomList = new ArrayList<>();
+   ArrayList<Guest> guestList = new ArrayList<>();
+   ArrayList<Booking> bookingList = new ArrayList<>();
    
    //Staff
     
    //Create  
    
    public void createStaff() throws IOException {
-      Scanner console = new Scanner(System.in);
       Staff staff = new Staff();
       
       System.out.println("In order to create a new member staff, please enter the following:");
@@ -53,7 +58,6 @@ public class Repository {
      //Search
      
    public void searchStaff() throws IOException {
-      Scanner console = new Scanner(System.in);
       
    } 
    
@@ -61,22 +65,27 @@ public class Repository {
     
    //Create
    public void createRoom() throws IOException {
-      Scanner console = new Scanner(System.in);
       Room room = new Room();
       
       System.out.println("In order to create a new room, please enter the following:");
       
-      System.out.println("Number of beds in the room: ");
+      System.out.println("Number of beds: ");
       room.setNumOfBeds(validateInput());
       
-      System.out.println("Does the room have internet?");
-      System.out.println("If no type false, if yes type true");
-      room.setInternet(console.nextBoolean());
+      System.out.println("Internet:");
+      System.out.println("Type yes or no:");
+      String word = console.next();
+      if (word.equals("yes")){
+         room.setInternet(true);
+         }
+      if (word.equals("no")){
+         room.setInternet(false);
+         }   
       
       System.out.println("Floor:");
       room.setFloor(validateInput());
       
-      System.out.println("Price per. night");
+      System.out.println("Price per night:");
       room.setPrice(validateInput());
       
       room.setAvailability(true);
@@ -92,8 +101,70 @@ public class Repository {
       
       }
       
+   //Guest
+    
+   //Create
+   
+   public void createGuest() throws IOException{
+   
+   Guest guest = new Guest();
+   
+   System.out.println("In order to create a new booking, please enter the following:");
+   System.out.println("First Name:");
+   guest.setFirstName(console.nextLine());
+      
+   System.out.println("Last Name: ");
+   guest.setLastName(console.nextLine());
+            
+   System.out.println("Address: ");
+   guest.setAddress(console.nextLine());
+      
+   System.out.println("Phone number: ");
+   guest.setPhoneNumber(console.nextLine());
+      
+   guestList.add(guest);  
+   
+   BufferedWriter output = new BufferedWriter(new FileWriter("Guest.txt", true));
+      
+   output.newLine();
+   output.write(guestList.get(guestList.size() - 1).toString());
+   output.close(); 
+   }
+   
+   
+   
+   //Booking
+   
+   //Create
+   
+   public void createBooking() throws IOException, ParseException{
+   
+   SimpleDateFormat start = new SimpleDateFormat ("yyyy-MM-dd");
+   
+   Booking booking = new Booking();
+   
+   System.out.println("StartDate:");
+   Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
+   booking.setStartDate(startDate);
+   
+   System.out.println("EndDate:");
+   Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
+   booking.setEndDate(endDate);
+   
+   System.out.println("RoomID:");
+   booking.setRoomID(validateInput());              
+      
+   bookingList.add(booking);  
+   
+   BufferedWriter output = new BufferedWriter(new FileWriter("Booking.txt", true));
+      
+   output.newLine();
+   output.write(bookingList.get(bookingList.size() - 1).toString());
+   output.close(); 
 
-  
+   }
+
+   //Validation for intergers
    
    public int validateInput()  {
       Scanner console = new Scanner(System.in);

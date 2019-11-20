@@ -1,31 +1,44 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 public class Booking {
 
    //Attributes
-   private String firstName;
-   private String phonenumber;
+   private Date startDate;
+   private Date endDate;
    private int RoomID;
    private int GuestID;
    
-    public Booking(String firstName, String phonenumber, int RoomID,int GuestID)
+    public Booking(Date startDate, Date endDate, int RoomID,int GuestID)
    {
-       this.firstName = firstName;
-       this.phonenumber = phonenumber;
+       this.startDate = startDate;
+       this.endDate = endDate;
        this.GuestID = GuestID;
        this.RoomID = RoomID;
    }
 
        public Booking() {}
-
    
    //Getters and setters
-   public String getFirstName()
+   public Date getStartDate()
    {
-       return firstName;
+       return startDate;
    }
-   public void setFirstName(String firstName)
+   public void setStartDate(Date startDate)
    {
-       this.firstName = firstName;
+       this.startDate = startDate;
    }
+   
+   public Date getEndDate()
+   {
+      return endDate;
+   }
+   public void setEndDate(Date endDate)
+   {
+       this.endDate = endDate;
+   }
+   
       public int getGuestID ()
    {
        return GuestID;
@@ -34,15 +47,7 @@ public class Booking {
    {
        this. GuestID = GuestID;
    }
-      public String getPhoneNumber()
-   {
-       return phonenumber;
-   }
-
-   public void setPhoneNumber(String phonenumber)
-   {
-       this.phonenumber = phonenumber;
-   }
+   
      public int getRoomID ()
    {
        return RoomID;
@@ -55,7 +60,7 @@ public class Booking {
    //To String
    public String toString()
    {
-      return "Name: " + firstName + "Phonenumber:" + phonenumber + "GuestID:" + GuestID + "RoomID:" + RoomID;
+      return startDate + " " + endDate + " " + GuestID+ " " + RoomID;
    } 
    
       
