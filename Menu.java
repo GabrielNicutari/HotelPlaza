@@ -18,7 +18,7 @@ public class Menu {
          System.out.println("[5] Exit program");
          System.out.println("============================");
          
-         choice = validateInput(choice,4);
+         choice = validateInput(choice, 5);
          
          switch(choice) {
             case 1:
@@ -42,7 +42,7 @@ public class Menu {
             default:
                System.out.println("Choice must be a value between \"1\" and \"5\".");
          }
-      }while(choice != 5);
+      } while(choice != 5);
    }
    
    public void staffMenu() {
@@ -53,10 +53,11 @@ public class Menu {
          System.out.println("Choose an option: ");
          System.out.println("[1] Create");
          System.out.println("[2] Search");
-         System.out.println("[3] Back To Main Menu");
+         System.out.println("[3] Display");
+         System.out.println("[4] Back To Main Menu");
          System.out.println("============================");
          
-         choice = validateInput(choice,3);
+         choice = validateInput(choice, 4);
          
          switch(choice) {
             case 1:
@@ -67,11 +68,13 @@ public class Menu {
                //searchStaff();
                break;
             case 3:
+               //displayStaff;
+            case 4:
                break;
             default:
-               System.out.println("Choice must be a value between \"1\" and \"3\".");
+               System.out.println("Choice must be a value between \"1\" and \"4\".");
          }
-      }while(choice != 3);
+      } while(choice != 4);
    }
    
    public void roomsMenu() {
@@ -85,7 +88,7 @@ public class Menu {
          System.out.println("[3] Back To Main Menu");
          System.out.println("============================");
          
-         choice = validateInput(choice,3);
+         choice = validateInput(choice, 3);
          
          switch(choice) {
             case 1:
