@@ -149,6 +149,8 @@ public class Repository {
    
    System.out.println("EndDate:");
    Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
+   endDate = validateDate(startDate, endDate);
+   
    booking.setEndDate(endDate);
    
    System.out.println("RoomID:");
@@ -176,6 +178,18 @@ public class Repository {
       int choice = console.nextInt();
       return choice;
    }
+      
+   public Date validateDate(Date startDate, Date endDate) throws ParseException {
+      
+      while(endDate.before(startDate))  {
+         System.out.println("Wrong input, the EndDate has to be after the StartDate.");
+         endDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
+         
+      }
+      return endDate;
+      
+   }
+  
 
 
 }
