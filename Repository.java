@@ -62,6 +62,15 @@ public class Repository {
       
    } 
    
+   //Display
+   
+   public void displayStaff() throws IOException {
+      //for (Staff s : staffList) {
+        // System.out.println(s.toString());
+         //}
+         System.out.println("Hello");
+      }
+   
             //Rooms\\
     
    //Create

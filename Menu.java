@@ -72,7 +72,7 @@ public class Menu {
          switch(choice) {
             case 1:
                printEmptyLines();
-               //display
+               repo.displayStaff();
                printEmptyLines();
                break;
             case 2:
