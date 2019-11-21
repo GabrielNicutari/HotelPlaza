@@ -99,4 +99,9 @@ public class Staff {
       return firstName + "     " + lastName + "     " + job + "     " + address + "     " 
       + phoneNumber + "     " + cpr + "     " + hours + "     " + salary;
    }
+   
+   public void displayAlligenedStaff() {
+      System.out.printf("%-15s%-15s%-15s%-15s%-15s%-15s%-15d%-15d%n",firstName,
+                        lastName,job,address,phoneNumber,cpr,hours,salary);
+   }
 }

@@ -22,7 +22,7 @@ public class Repository {
                                           
       BufferedReader input = new BufferedReader(new FileReader("Staff.txt"));
       
-      String line = "";
+      String line ="";
       
       while((line = input.readLine()) != null)  {
          String[] split = line.split("     ");
@@ -32,7 +32,7 @@ public class Repository {
       }
       input.close();
    }
-    
+   
    //Create  
    
    public void createStaff() throws IOException {
@@ -71,54 +71,41 @@ public class Repository {
       output.newLine();
       output.write(staffList.get(staffList.size() - 1).toString());
       output.close();
-      
-      //try (BufferedReader br = new BufferedReader(new FileReader("Staff.txt"))) {
-       //while (br.ready()) {
-        //staffList.add(br.readLine());
-      }
+   }
   
    
    //Search  
    public void searchStaff() throws IOException {
    
-      String input = console.next();
-   
+      String input = console.nextLine();
+      boolean ok = false;
+      
       for(Staff s : staffList) {
-         if (s.getJob().equals(input))
+         if (s.getJob().contains(input) || s.getFirstName().contains(input) || s.getCpr().equals(input))  {
+            ok = true;
             System.out.print(s.toString());
-         else 
-            System.out.print("There is no staff member with this title");
-         
-      
+         }
       }
-      
+      if(!ok)  {
+         System.out.println("The staff member hasn't been found.");
+      }
    } 
    
    //Display
    
    public void displayStaff() throws IOException {
-      for (Staff s : staffList) {
-        System.out.println(s.toString());
-        }
-      }
+      System.out.println("Staff members");
       
-   // public void displayEmployees(ArrayList<Employee> employees) throws FileNotFoundException, IOException {
-//       
-//       System.out.println("FITNESS EMPLOYEES");
-//       System.out.printf("%-15s%-15s%-10s%-10s%-10s%n","Name","CPR","Hours","Salary","Vacation");
-//       System.out.println("**************************************************************");     
-//       
-//       for(int i = 0; i < employees.size(); i++)  {
-//          employees.get(i).displayAlligned();
-//       }
-//       
-//       System.out.println("==================================");
-//    
-//    }
-   
+      System.out.printf("%-15s%-15s%-15s%-15s%-15s%-15s%-15s%-15s%n","First Name",
+                        "Last Name","Job","Address","Phone number","CPR","Working hours","Salary");
+      System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+      
+      for (int i=0; i < staffList.size(); i++) {
+         staffList.get(i).displayAlligenedStaff();
+      }
+   }
             //Rooms\\
-            
-            
+             
     //Display
    
    public void displayRoom() throws IOException {

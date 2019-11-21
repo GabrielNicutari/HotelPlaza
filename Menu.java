@@ -74,16 +74,19 @@ public class Menu {
             case 1:
                printEmptyLines();
                repo.displayStaff();
+               doesStop();
                printEmptyLines();
                break;
             case 2:
                printEmptyLines();
                repo.createStaff();
+               doesStop();
                printEmptyLines();
                break;
             case 3:
                printEmptyLines();
-               repo.searchStaff();
+               //repo.searchStaff();
+               searchStaff();
                printEmptyLines();
             case 4:
                break;
@@ -112,11 +115,13 @@ public class Menu {
             case 1:
                printEmptyLines();
                //display
+               doesStop();
                printEmptyLines();
                break;
             case 2:
                printEmptyLines();
                //create
+               doesStop();
                printEmptyLines();
                break;
             case 3:
@@ -150,6 +155,7 @@ public class Menu {
             case 1:
                printEmptyLines();
                //display
+               doesStop();
                printEmptyLines();
                break;
             case 2:
@@ -184,12 +190,14 @@ public class Menu {
             case 1:
                printEmptyLines();
                //display;
+               doesStop();
                printEmptyLines();
                break;
             case 2:
                printEmptyLines();
                repo.createGuest();
                repo.createBooking();
+               doesStop();
                printEmptyLines();
                break;
             case 3:
@@ -211,9 +219,9 @@ public class Menu {
       do {
          System.out.println("SEARCH STAFF MENU");
          System.out.println("****************************");
-         System.out.println("Type the first name or the CPR (ddmmyy-xxxx) of the staff member.");
+         System.out.println("Type the first name, the CPR (ddmmyy-xxxx) or the role of the staff member.");
          
-         //repo.searchStaff();
+         repo.searchStaff();
          
          System.out.println("Choose an option: ");
          System.out.println("[1] Update");
@@ -510,10 +518,11 @@ public class Menu {
    
    public void doesStop() {
       Scanner console = new Scanner(System.in);
-      System.out.println("Do you want to do anything else? (Type \"Y\" or \"N\")");
+      System.out.println("Do you want to do anything else? (Type \"Y/YES\" or \"N/NO\")");
       
       String input = console.next();
       while(isNotYesOrNO(input)) {     //Input Validation
+         System.out.println("Wrong input. Type Type \"Y/YES\" or \"N/NO\"");
          input = console.next(); 
       }
       
