@@ -11,6 +11,7 @@ public class Menu {
    
    public void displayForAdministrator() throws IOException, ParseException{
       int choice = -1;
+      repo.inputStaff();
       do {
          System.out.println("MAIN MENU");
          System.out.println("****************************");

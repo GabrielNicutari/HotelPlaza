@@ -15,6 +15,23 @@ public class Repository {
    ArrayList<Booking> bookingList = new ArrayList<>();
    
             //Staff\\
+   
+   //Input
+   
+   public void inputStaff() throws FileNotFoundException, IOException   {
+                                          
+      BufferedReader input = new BufferedReader(new FileReader("Staff.txt"));
+      
+      String line = "";
+      
+      while((line = input.readLine()) != null)  {
+         String[] split = line.split("     ");
+         
+         staffList.add(new Staff(split[0],split[1],split[2],split[3],split[4],split[5],Integer.valueOf(split[6]),
+                                 Integer.valueOf(split[7])));
+      }
+      input.close();
+   }
     
    //Create  
    
@@ -84,6 +101,20 @@ public class Repository {
         System.out.println(s.toString());
         }
       }
+      
+   // public void displayEmployees(ArrayList<Employee> employees) throws FileNotFoundException, IOException {
+//       
+//       System.out.println("FITNESS EMPLOYEES");
+//       System.out.printf("%-15s%-15s%-10s%-10s%-10s%n","Name","CPR","Hours","Salary","Vacation");
+//       System.out.println("**************************************************************");     
+//       
+//       for(int i = 0; i < employees.size(); i++)  {
+//          employees.get(i).displayAlligned();
+//       }
+//       
+//       System.out.println("==================================");
+//    
+//    }
    
             //Rooms\\
             
