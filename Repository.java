@@ -76,18 +76,33 @@ public class Repository {
    
    //Search  
    public void searchStaff() throws IOException {
-   
+      
       String input = console.nextLine();
-      boolean ok = false;
+      
+      System.out.println();
+                        
+      boolean ok_object = false, ok_headline = false;
       
       for(Staff s : staffList) {
-         if (s.getJob().contains(input) || s.getFirstName().contains(input) || s.getCpr().equals(input))  {
-            ok = true;
-            System.out.print(s.toString());
+         if (s.getJob().toLowerCase().contains(input.toLowerCase()) || 
+            s.getFirstName().toLowerCase().contains(input.toLowerCase()) ||
+            s.getCpr().toLowerCase().equals(input.toLowerCase()))  {
+               ok_object = true;
+               if(!ok_headline)  {
+                  System.out.printf("%-21s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","First Name",
+                        "Last Name","Job","Address","Phone number","CPR","Working hours","Salary");
+                  System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
+                  ok_headline = true;
+               }
+               s.displayAlligned();
          }
       }
-      if(!ok)  {
+      
+      System.out.println();
+      
+      if(!ok_object)  {
          System.out.println("The staff member hasn't been found.");
+         System.out.println();
       }
    } 
    
@@ -101,16 +116,38 @@ public class Repository {
       System.out.println("------------------------------------------------------------------------------------------------------------------------------");
       
       for (int i=0; i < staffList.size(); i++) {
-         staffList.get(i).displayAlligenedStaff();
+         staffList.get(i).displayAlligned();
       }
    }
             //Rooms\\
-             
-    //Display
+    //Input
+    
+    public void inputRoom() throws FileNotFoundException, IOException   {
+                                          
+      BufferedReader input = new BufferedReader(new FileReader("Room.txt"));
+      
+      String line ="";
+      
+      while((line = input.readLine()) != null)  {
+         String[] split = line.split("     ");
+         
+         roomList.add(new Room(Integer.valueOf(split[0]),Integer.valueOf(split[1]),
+                               Boolean.valueOf(split[2]),Integer.valueOf(split[3]),Integer.valueOf(split[4]),Boolean.valueOf(split[5])));
+      }
+      input.close();
+   }
+            
+   //Display
    
    public void displayRoom() throws IOException {
-     for (Room r : roomList) {
-      System.out.println(r.toString());
+      System.out.println("Room overveiw");
+      
+      System.out.printf("%-15s%-15s%-15s%-15s%-15s%n","RoomID",
+                        "Beds","Wifi","Floor","Price per night");
+      System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+      
+      for (int i=0; i < roomList.size(); i++) {
+         roomList.get(i).displayAlligenedRoom();
       }
    }
     
@@ -153,18 +190,40 @@ public class Repository {
       }
       
             //Guest\\
+   //Input
+   
+   public int inputGuest(int maxID) throws FileNotFoundException, IOException   {
+                                          
+      BufferedReader input = new BufferedReader(new FileReader("Guest.txt"));
+      
+      String line ="";
+      
+      while((line = input.readLine()) != null)  {
+         String[] split = line.split("     ");
+         guestList.add(new Guest(split[0],split[1],split[2],split[3],Integer.valueOf(split[4])));
+         maxID++;
+      }
+      input.close();
+      return maxID;
+   }
             
    //Display
    
    public void displayGuest() throws IOException {
-    for (Guest g : guestList) {
-     System.out.println(g.toString());
-    }
+      System.out.println("Guest overveiw");
+      
+      System.out.printf("%-15s%-15s%-15s%-15s%-15s%n","First Name",
+                        "Last Name","Adress","Phone number","Guest ID");
+      System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+      
+      for (int i=0; i < guestList.size(); i++) {
+         guestList.get(i).displayAlligenedGuest();
+      }
    }
     
    //Create
    
-   public void createGuest() throws IOException{
+   public int createGuest(int maxID) throws IOException{
    
       Guest guest = new Guest();
       
@@ -180,6 +239,9 @@ public class Repository {
          
       System.out.println("Phone number: ");
       guest.setPhoneNumber(console.nextLine());
+      
+      guest.setGuestID(maxID + 1);
+      maxID++; //Increments the ID whenever a guest is created.
          
       guestList.add(guest);  
       
@@ -188,6 +250,8 @@ public class Repository {
       output.newLine();
       output.write(guestList.get(guestList.size() - 1).toString());
       output.close(); 
+      
+      return maxID;
    }
    
    

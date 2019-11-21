@@ -97,11 +97,11 @@ public class Staff {
    
    public String toString() {
       return firstName + "     " + lastName + "     " + job + "     " + address + "     " 
-      + phoneNumber + "     " + cpr + "     " + hours + "     " + salary;
+      + phoneNumber + "     " + cpr + "     " + hours + "     " + salary + "\n";
    }
    
-   public void displayAlligenedStaff() {
-      System.out.printf("%-15s%-15s%-15s%-15s%-15s%-15s%-15d%-15d%n",firstName,
+   public void displayAlligned() {
+      System.out.printf("%-21s%-21s%-20s%-20s%-15s%-12s%-16d%-15d%n",firstName,
                         lastName,job,address,phoneNumber,cpr,hours,salary);
    }
 }

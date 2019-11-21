@@ -8,10 +8,13 @@ public class Menu {
    public Menu()  {}
    
    Repository repo = new Repository();
+   int maxID = 0;
    
    public void displayForAdministrator() throws IOException, ParseException{
       int choice = -1;
       repo.inputStaff();
+      maxID = repo.inputGuest(maxID);
+      repo.inputRoom();
       do {
          System.out.println("MAIN MENU");
          System.out.println("****************************");
@@ -97,7 +100,7 @@ public class Menu {
       } while(choice != 4);
    }
    
-   public void roomMenu() {
+   public void roomMenu() throws IOException{
       int choice = -1;
       do {
          System.out.println("ROOMS MENU");
@@ -114,13 +117,13 @@ public class Menu {
          switch(choice) {
             case 1:
                printEmptyLines();
-               //display
+               repo.displayRoom();
                doesStop();
                printEmptyLines();
                break;
             case 2:
                printEmptyLines();
-               //create
+               repo.createRoom();
                doesStop();
                printEmptyLines();
                break;
@@ -138,7 +141,7 @@ public class Menu {
       }while(choice != 4);
    }
    
-   public void guestMenu()   {
+   public void guestMenu()   throws IOException{
       int choice = -1;
       do {
          System.out.println("GUESTS MENU");
@@ -154,7 +157,7 @@ public class Menu {
          switch(choice) {
             case 1:
                printEmptyLines();
-               //display
+               repo.displayGuest();
                doesStop();
                printEmptyLines();
                break;
@@ -195,7 +198,7 @@ public class Menu {
                break;
             case 2:
                printEmptyLines();
-               repo.createGuest();
+               maxID = repo.createGuest(maxID);
                repo.createBooking();
                doesStop();
                printEmptyLines();
@@ -220,7 +223,7 @@ public class Menu {
          System.out.println("SEARCH STAFF MENU");
          System.out.println("****************************");
          System.out.println("Type the first name, the CPR (ddmmyy-xxxx) or the role of the staff member.");
-         
+                                 
          repo.searchStaff();
          
          System.out.println("Choose an option: ");
