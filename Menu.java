@@ -82,7 +82,7 @@ public class Menu {
                break;
             case 3:
                printEmptyLines();
-               searchStaff();    //Another menu
+               repo.searchStaff();
                printEmptyLines();
             case 4:
                break;

@@ -55,23 +55,46 @@ public class Repository {
       output.write(staffList.get(staffList.size() - 1).toString());
       output.close();
       
-   }
+      //try (BufferedReader br = new BufferedReader(new FileReader("Staff.txt"))) {
+       //while (br.ready()) {
+        //staffList.add(br.readLine());
+      }
+  
    
    //Search  
    public void searchStaff() throws IOException {
+   
+      String input = console.next();
+   
+      for(Staff s : staffList) {
+         if (s.getJob().equals(input))
+            System.out.print(s.toString());
+         else 
+            System.out.print("There is no staff member with this title");
+         
+      
+      }
       
    } 
    
    //Display
    
    public void displayStaff() throws IOException {
-      //for (Staff s : staffList) {
-        // System.out.println(s.toString());
-         //}
-         System.out.println("Hello");
+      for (Staff s : staffList) {
+        System.out.println(s.toString());
+        }
       }
    
             //Rooms\\
+            
+            
+    //Display
+   
+   public void displayRoom() throws IOException {
+     for (Room r : roomList) {
+      System.out.println(r.toString());
+      }
+   }
     
    //Create
    public void createRoom() throws IOException {
@@ -112,6 +135,14 @@ public class Repository {
       }
       
             //Guest\\
+            
+   //Display
+   
+   public void displayGuest() throws IOException {
+    for (Guest g : guestList) {
+     System.out.println(g.toString());
+    }
+   }
     
    //Create
    
@@ -145,6 +176,14 @@ public class Repository {
    
    //Booking
    
+   //Display
+   
+   public void displayBooking() throws IOException {
+    for (Booking b : bookingList) {
+     System.out.println(b.toString());
+    }
+   }
+    
    //Create
    
    public void createBooking() throws IOException, ParseException{
