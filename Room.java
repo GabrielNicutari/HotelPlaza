@@ -63,6 +63,13 @@ public class Room {
    
    //To string
    public String toString()   {
-      return RoomID + " " + numOfBeds + " " + internet + " " + floor + " " + price + " " + availability;
+      return RoomID + "     " + numOfBeds + "     " + internet + "     " + floor + "     " 
+             + price + "      " + availability;
    }
+   
+   public void displayAlligenedRoom() {
+      System.out.printf("%-15d%-15d%-15b%-15d%-15d%n",RoomID,
+                        numOfBeds,internet,floor,price);
+   }
+
 }

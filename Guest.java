@@ -5,15 +5,15 @@ public class Guest {
    private String firstName;
    private String address;
    private String phonenumber;
-   private int GuestID;
+   private int guestID;
 
-   public Guest(String firstName, String lastName, String address, String phonenumber, int GuestID)
+   public Guest(String firstName, String lastName, String address, String phonenumber, int guestID)
    {
        this.lastName = lastName;
        this.firstName = firstName;
        this.address = address;
        this.phonenumber = phonenumber;
-       this.GuestID = GuestID;
+       this.guestID = guestID;
    }
 
        public Guest() {}
@@ -60,16 +60,21 @@ public class Guest {
    
    public int getGuestID ()
    {
-       return GuestID;
+       return guestID;
    }
-   public void setGuestID (int GuestID)
+   public void setGuestID (int guestID)
    {
-       this. GuestID = GuestID;
+       this. guestID = guestID;
    }
    
    //To String
    public String toString()
    {
-      return "Name: " + firstName + " " + lastName + " " + "Address: " + address + "  " + "Telephone no.: " + phonenumber + "GuestID:" + GuestID;
+      return firstName + "     " + lastName + "     " + address + "     " + phonenumber + 
+      "     " + guestID;
+   }  
+   public void displayAlligenedGuest() {
+      System.out.printf("%-15s%-15s%-15s%-15s%-15d%n",firstName,
+                        lastName,address,phonenumber,guestID);
    }
 }

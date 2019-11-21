@@ -1,7 +1,5 @@
-
-Name: Frederik Ottosen Address: Gl. Novrupvej 2  Telephone no.: 23663512GuestID:0
-Name: Frederik Ottosen Address: Gl novrupvej 2  Telephone no.: 23663512GuestID:0
-Name: Frederik ottosen Address: gl nov  Telephone no.: 23663512GuestID:0
-Name: f f Address: f  Telephone no.: fGuestID:0
-Name: Frederik Ottosen Address: Nyvej 12D  Telephone no.: 23663512GuestID:0
-Name: Frederik ottosen Address: d  Telephone no.: dGuestID:0
+Frederik     Ottosen     Nyvej 12     23663512     1
+Bianca     Stan     Uvej     54354543     1
+Frederik     Jensen     nyvej      26436543     3
+frederik     jensen     nyvej     3423424     4
+f     f     f     232     5
