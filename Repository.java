@@ -14,14 +14,15 @@ public class Repository {
    ArrayList<Guest> guestList = new ArrayList<>();
    ArrayList<Booking> bookingList = new ArrayList<>();
    
-   //Staff
+            //Staff\\
     
    //Create  
    
    public void createStaff() throws IOException {
       Staff staff = new Staff();
       
-      System.out.println("In order to create a new member staff, please enter the following:");
+      System.out.println("In order to create a new staff member, please enter the following:");
+      
       System.out.println("First Name: ");
       staff.setFirstName(console.nextLine());
       
@@ -55,13 +56,13 @@ public class Repository {
       output.close();
       
    }
-     //Search
-     
+   
+   //Search  
    public void searchStaff() throws IOException {
       
    } 
    
-   //Rooms
+            //Rooms\\
     
    //Create
    public void createRoom() throws IOException {
@@ -101,34 +102,34 @@ public class Repository {
       
       }
       
-   //Guest
+            //Guest\\
     
    //Create
    
    public void createGuest() throws IOException{
    
-   Guest guest = new Guest();
-   
-   System.out.println("In order to create a new booking, please enter the following:");
-   System.out.println("First Name:");
-   guest.setFirstName(console.nextLine());
+      Guest guest = new Guest();
       
-   System.out.println("Last Name: ");
-   guest.setLastName(console.nextLine());
-            
-   System.out.println("Address: ");
-   guest.setAddress(console.nextLine());
+      System.out.println("In order to create a new booking, please enter the following:");
+      System.out.println("First Name:");
+      guest.setFirstName(console.nextLine());
+         
+      System.out.println("Last Name: ");
+      guest.setLastName(console.nextLine());
+               
+      System.out.println("Address: ");
+      guest.setAddress(console.nextLine());
+         
+      System.out.println("Phone number: ");
+      guest.setPhoneNumber(console.nextLine());
+         
+      guestList.add(guest);  
       
-   System.out.println("Phone number: ");
-   guest.setPhoneNumber(console.nextLine());
-      
-   guestList.add(guest);  
-   
-   BufferedWriter output = new BufferedWriter(new FileWriter("Guest.txt", true));
-      
-   output.newLine();
-   output.write(guestList.get(guestList.size() - 1).toString());
-   output.close(); 
+      BufferedWriter output = new BufferedWriter(new FileWriter("Guest.txt", true));
+         
+      output.newLine();
+      output.write(guestList.get(guestList.size() - 1).toString());
+      output.close(); 
    }
    
    
@@ -139,34 +140,33 @@ public class Repository {
    
    public void createBooking() throws IOException, ParseException{
    
-   SimpleDateFormat start = new SimpleDateFormat ("yyyy-MM-dd");
-   
-   Booking booking = new Booking();
-   
-   System.out.println("StartDate:");
-   Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
-   booking.setStartDate(startDate);
-   
-   System.out.println("EndDate:");
-   Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
-   endDate = validateDate(startDate, endDate);
-   
-   booking.setEndDate(endDate);
-   
-   System.out.println("RoomID:");
-   booking.setRoomID(validateInput());              
+      SimpleDateFormat start = new SimpleDateFormat ("yyyy-MM-dd");
       
-   bookingList.add(booking);  
-   
-   BufferedWriter output = new BufferedWriter(new FileWriter("Booking.txt", true));
+      Booking booking = new Booking();
       
-   output.newLine();
-   output.write(bookingList.get(bookingList.size() - 1).toString());
-   output.close(); 
-
+      System.out.println("StartDate:");
+      Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
+      booking.setStartDate(startDate);
+      
+      System.out.println("EndDate:");
+      Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
+      endDate = validateDate(startDate, endDate);
+      
+      booking.setEndDate(endDate);
+      
+      System.out.println("RoomID:");
+      booking.setRoomID(validateInput());              
+         
+      bookingList.add(booking);  
+      
+      BufferedWriter output = new BufferedWriter(new FileWriter("Booking.txt", true));
+         
+      output.newLine();
+      output.write(bookingList.get(bookingList.size() - 1).toString());
+      output.close(); 
    }
 
-   //Validation for intergers
+   //Validation for integers
    
    public int validateInput()  {
       Scanner console = new Scanner(System.in);
@@ -184,14 +184,9 @@ public class Repository {
       while(endDate.before(startDate))  {
          System.out.println("Wrong input, the EndDate has to be after the StartDate.");
          endDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
-         
       }
       return endDate;
-      
    }
-  
-
-
 }
 
 

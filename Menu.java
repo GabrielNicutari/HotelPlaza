@@ -82,7 +82,7 @@ public class Menu {
                break;
             case 3:
                printEmptyLines();
-               searchStaff();
+               searchStaff();    //Another menu
                printEmptyLines();
             case 4:
                break;
@@ -120,7 +120,7 @@ public class Menu {
                break;
             case 3:
                printEmptyLines();
-               searchRoom();
+               searchRoom();  //Another menu
                printEmptyLines();
                break;
             case 4:
@@ -153,7 +153,7 @@ public class Menu {
                break;
             case 2:
                printEmptyLines();
-               searchGuest();
+               searchGuest();    //Another menu
                printEmptyLines();
                break;
             case 3:
@@ -217,7 +217,7 @@ public class Menu {
          System.out.println("Choose an option: ");
          System.out.println("[1] Update");
          System.out.println("[2] Delete");
-         System.out.println("[3] Back To Main Menu");
+         System.out.println("[3] Go Back");
          System.out.println("============================");
          
          choice = validateInput(choice,3);
@@ -255,8 +255,8 @@ public class Menu {
          System.out.println("Choose an option: ");
          System.out.println("[1] Further filter");
          System.out.println("[2] Update");
-         System.out.println("[3] Delete");
-         System.out.println("[4] Back To Main Menu");
+         System.out.println("[3] Delete");   //We can't delete rooms, I think
+         System.out.println("[4] Go Back");
          System.out.println("============================");
          
          choice = validateInput(choice,4);
@@ -267,12 +267,12 @@ public class Menu {
                break;
             case 2:
                printEmptyLines();
-               //repo.updateStaff();
+               //repo.updateRoom();
                printEmptyLines();
                break;
             case 3:
                printEmptyLines();
-               //repo.deleteStaff();
+               //repo.deleteRoom();    //Probably not
                printEmptyLines();
                break;
             case 4:
@@ -333,14 +333,14 @@ public class Menu {
       do {
          System.out.println("SEARCH GUEST MENU");
          System.out.println("****************************");
-         System.out.println("Type the first name or the CPR (ddmmyy-xxxx) of the staff member.");
+         System.out.println("Type the first name or the CPR (ddmmyy-xxxx) of the guest.");
          
          //repo.searchGuest();
          
          System.out.println("Choose an option: ");
          System.out.println("[1] Update");
          System.out.println("[2] Delete");
-         System.out.println("[3] Back To Main Menu");
+         System.out.println("[3] Go Back");
          System.out.println("============================");
          
          choice = validateInput(choice,3);
@@ -366,7 +366,46 @@ public class Menu {
    }
    
    public void searchBooking()  {
-   
+      int choice = -1;
+      do {
+         System.out.println("SEARCH BOOKING MENU");
+         System.out.println("****************************");
+         System.out.println("");
+         
+         //repo.searchBooking();
+         //chooseBookingFilter();      //Probably not
+         
+         System.out.println("Choose an option: ");
+         System.out.println("[1] Further filter");    //Probably not
+         System.out.println("[2] Update");
+         System.out.println("[3] Delete");
+         System.out.println("[4] Go Back");
+         System.out.println("============================");
+         
+         choice = validateInput(choice,4);
+         
+         switch(choice) {
+            case 1:
+               // goes through the loop again
+               break;
+            case 2:
+               printEmptyLines();
+               //repo.updateBooking();
+               printEmptyLines();
+               break;
+            case 3:
+               printEmptyLines();
+               //repo.deleteBooking();
+               //repo.deleteGuest();
+               printEmptyLines();
+               break;
+            case 4:
+               break;
+            default:
+               printEmptyLines();
+               System.out.println("Choice must be a value between \"1\" and \"4\".");
+         }
+      }while(choice != 4);
    }
    
    public void updateStaff()  throws IOException{
