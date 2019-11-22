@@ -73,6 +73,7 @@ public class Guest {
       return firstName + "     " + lastName + "     " + address + "     " + phonenumber + 
       "     " + guestID;
    }  
+   
    public void displayAlligenedGuest() {
       System.out.printf("%-15s%-15s%-15s%-15s%-15d%n",firstName,
                         lastName,address,phonenumber,guestID);

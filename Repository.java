@@ -18,7 +18,7 @@ public class Repository {
    
    //Input
    
-   public void inputStaff() throws FileNotFoundException, IOException   {
+   public int inputStaff(int maxID) throws FileNotFoundException, IOException   {
                                           
       BufferedReader input = new BufferedReader(new FileReader("Staff.txt"));
       
@@ -27,15 +27,17 @@ public class Repository {
       while((line = input.readLine()) != null)  {
          String[] split = line.split("     ");
          
-         staffList.add(new Staff(split[0],split[1],split[2],split[3],split[4],split[5],Integer.valueOf(split[6]),
-                                 Integer.valueOf(split[7])));
+         staffList.add(new Staff(Integer.valueOf(split[0]),split[1],split[2],split[3],split[4],split[5],split[6],Integer.valueOf(split[7]),
+                                 Integer.valueOf(split[8])));
+         maxID++;
       }
       input.close();
+      return maxID;
    }
    
    //Create  
    
-   public void createStaff() throws IOException {
+   public int createStaff(int maxID) throws IOException {
       Staff staff = new Staff();
       
       System.out.println("In order to create a new staff member, please enter the following:");
@@ -64,6 +66,9 @@ public class Repository {
       System.out.println("Monthly Salary: ");
       staff.setSalary(validateInput());
       
+      staff.setId(maxID + 1);
+      maxID++;
+      
       staffList.add(staff);
             
       BufferedWriter output = new BufferedWriter(new FileWriter("Staff.txt", true));
@@ -71,6 +76,8 @@ public class Repository {
       output.newLine();
       output.write(staffList.get(staffList.size() - 1).toString());
       output.close();
+      
+      return maxID;
    }
   
    
@@ -89,7 +96,7 @@ public class Repository {
             s.getCpr().toLowerCase().equals(input.toLowerCase()))  {
                ok_object = true;
                if(!ok_headline)  {
-                  System.out.printf("%-21s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","First Name",
+                  System.out.printf("%-5s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","ID","First Name",
                         "Last Name","Job","Address","Phone number","CPR","Working hours","Salary");
                   System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
                   ok_headline = true;
@@ -111,14 +118,47 @@ public class Repository {
    public void displayStaff() throws IOException {
       System.out.println("Staff members");
       
-      System.out.printf("%-15s%-15s%-15s%-15s%-15s%-15s%-15s%-15s%n","First Name",
+      System.out.printf("%-5s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","ID","First Name",
                         "Last Name","Job","Address","Phone number","CPR","Working hours","Salary");
       System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+      
+      
       
       for (int i=0; i < staffList.size(); i++) {
          staffList.get(i).displayAlligned();
       }
    }
+   
+   //Update
+   
+   public void updateStaff(int toUpdate, String task)  {
+      switch(task)   {
+         case "choose":
+            for(Staff s : staffList)   {
+               
+            }
+            break;
+         case "firstName":
+            break;
+         case "lastName":
+            break;
+         case "job":
+            break;
+         case "address":
+            break;
+         case "phoneNumber":
+            break;
+         case "CPR":
+            break;
+         case "hours":
+            break;
+         case "salary":
+            break; 
+         default:
+            System.out.println("Wrong task");
+      }
+   }
+     
             //Rooms\\
     //Input
     
@@ -256,30 +296,54 @@ public class Repository {
    
    
    
-   //Booking
+         //Booking\\
+   
+   //Input
+   
+   public void inputBooking() throws FileNotFoundException, IOException, ParseException   {
+                                          
+      BufferedReader input = new BufferedReader(new FileReader("Booking.txt"));
+      
+      SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+      
+      String line ="";
+      
+      while((line = input.readLine()) != null)  {
+         String[] split = line.split("     ");
+         bookingList.add(new Booking(Integer.valueOf(split[0]),Integer.valueOf(split[1]),format.parse(split[2]),format.parse(split[3])));
+      }
+      input.close();
+   }
    
    //Display
    
    public void displayBooking() throws IOException {
-    for (Booking b : bookingList) {
-     System.out.println(b.toString());
-    }
+      
+      System.out.printf("%-5s%-15s%-15s%-15s%n","ID",
+                        "Room Number","Start Date","End Date");
+      System.out.println("------------------------------------------------");
+      
+      for (int i = 0; i < bookingList.size(); i++) {
+         bookingList.get(i).displayAlligned();
+      }    
    }
     
    //Create
    
    public void createBooking() throws IOException, ParseException{
    
-      SimpleDateFormat start = new SimpleDateFormat ("yyyy-MM-dd");
+      DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
       
       Booking booking = new Booking();
       
       System.out.println("StartDate:");
-      Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
+ 
+      Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.nextLine());
       booking.setStartDate(startDate);
       
       System.out.println("EndDate:");
-      Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
+      Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.nextLine());
+      
       endDate = validateDate(startDate, endDate);
       
       booking.setEndDate(endDate);

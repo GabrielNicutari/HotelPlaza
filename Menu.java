@@ -9,12 +9,14 @@ public class Menu {
    
    Repository repo = new Repository();
    int maxID = 0;
+   int maxID_Staff = 0;
    
    public void displayForAdministrator() throws IOException, ParseException{
       int choice = -1;
-      repo.inputStaff();
       maxID = repo.inputGuest(maxID);
+      maxID_Staff = repo.inputStaff(maxID_Staff);
       repo.inputRoom();
+      repo.inputBooking();
       do {
          System.out.println("MAIN MENU");
          System.out.println("****************************");
@@ -82,13 +84,12 @@ public class Menu {
                break;
             case 2:
                printEmptyLines();
-               repo.createStaff();
+               maxID_Staff = repo.createStaff(maxID_Staff);
                doesStop();
                printEmptyLines();
                break;
             case 3:
-               printEmptyLines();
-               //repo.searchStaff();
+               printEmptyLines();  
                searchStaff();
                printEmptyLines();
             case 4:
@@ -192,7 +193,7 @@ public class Menu {
          switch(choice) {
             case 1:
                printEmptyLines();
-               //display;
+               repo.displayBooking();
                doesStop();
                printEmptyLines();
                break;
@@ -426,7 +427,8 @@ public class Menu {
       System.out.println("Type the ID of the staff member you want to modify ");
       int toUpdate = console.read();
       
-      //repo.updateStaff(toUpdate,"choose");
+      repo.updateStaff(toUpdate,"choose");
+      
       int choice = -1;
       do {
           System.out.println();
@@ -486,13 +488,10 @@ public class Menu {
                break;
             case 9:
                printEmptyLines();
-               //repo.updateStaff(toUpdate,"hours");
+               //repo.updateStaff(toUpdate,"everything");
                printEmptyLines();
                break;
             case 10:
-               printEmptyLines();
-              // repo.updateStaff(toUpdate,"everything");
-               printEmptyLines();
                break;
             default:
                printEmptyLines();

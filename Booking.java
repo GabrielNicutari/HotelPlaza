@@ -5,20 +5,20 @@ import java.util.*;
 public class Booking {
 
    //Attributes
+   private int guestID;
+   private int roomID;
    private Date startDate;
    private Date endDate;
-   private int RoomID;
-   private int GuestID;
    
-    public Booking(Date startDate, Date endDate, int RoomID,int GuestID)
+    public Booking(int guestID, int roomID, Date startDate, Date endDate)
    {
        this.startDate = startDate;
        this.endDate = endDate;
-       this.GuestID = GuestID;
-       this.RoomID = RoomID;
+       this.guestID = guestID;
+       this.roomID = roomID;
    }
 
-       public Booking() {}
+   public Booking() {}
    
    //Getters and setters
    public Date getStartDate()
@@ -41,31 +41,36 @@ public class Booking {
    
       public int getGuestID ()
    {
-       return GuestID;
+       return guestID;
    }
-   public void setGuestID (int GuestID)
+   public void setGuestID (int guestID)
    {
-       this. GuestID = GuestID;
+       this.guestID = guestID;
    }
    
      public int getRoomID ()
    {
-       return RoomID;
+       return roomID;
    }
-   public void setRoomID (int RoomID)
+   public void setRoomID (int roomID)
    {
-       this.RoomID = RoomID;
+       this.roomID = roomID;
    }
    
    //To String
    public String toString()
    {
-      return startDate + " " + endDate + " " + GuestID+ " " + RoomID;
+      SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+      String start = formatter.format(startDate);
+      String end = formatter.format(endDate);
+      return guestID + "     " + roomID + "     " + start + "     " + end;
    } 
    
-      
-
-
-
+   public void displayAlligned() {
+      SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+      String start = formatter.format(startDate);
+      String end = formatter.format(endDate);
+      System.out.printf("%-5d%-15d%-15s%-15s%n",guestID,roomID,start,end);
+   }   
 }
 
