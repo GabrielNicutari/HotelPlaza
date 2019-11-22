@@ -10,6 +10,7 @@ public class Menu {
    Repository repo = new Repository();
    int maxID = 0;
    int maxID_Staff = 0;
+   Scanner console = new Scanner(System.in);
    
    public void displayForAdministrator() throws IOException, ParseException{
       int choice = -1;
@@ -220,12 +221,15 @@ public class Menu {
    
    public void searchStaff()  throws IOException{
       int choice = -1;
+      boolean repeat = true;
       do {
          System.out.println("SEARCH STAFF MENU");
          System.out.println("****************************");
-         System.out.println("Type the first name, the CPR (ddmmyy-xxxx) or the role of the staff member.");
-                                 
-         repo.searchStaff();
+         
+         if(repeat)  {
+            System.out.println("Type the first name, the CPR (ddmmyy-xxxx) or the role of the staff member.");
+            repo.searchStaff();
+         }
          
          System.out.println("Choose an option: ");
          System.out.println("[1] Update");
@@ -237,13 +241,13 @@ public class Menu {
          
          switch(choice) {
             case 1:
-               printEmptyLines();
                updateStaff();
+               repeat = false;
                printEmptyLines();
                break;
             case 2:
-               printEmptyLines();
-               //repo.deleteStaff();
+               repo.deleteStaff();
+               repeat = false;
                printEmptyLines();
                break;
             case 3:
@@ -421,13 +425,10 @@ public class Menu {
       }while(choice != 4);
    }
    
-   public void updateStaff()  throws IOException{
-      BufferedReader console = new BufferedReader (new InputStreamReader(System.in)); 
-      
+   public void updateStaff()  throws IOException{      
       System.out.println("Type the ID of the staff member you want to modify ");
-      int toUpdate = console.read();
       
-      repo.updateStaff(toUpdate,"choose");
+      int toUpdate = console.nextInt();
       
       int choice = -1;
       do {
@@ -448,47 +449,47 @@ public class Menu {
           switch(choice) {
             case 1:
                printEmptyLines();
-               //repo.updateStaff(toUpdate,"firstName");
+               repo.updateStaff(toUpdate,"firstName");
                printEmptyLines();
                break;
             case 2:
                printEmptyLines();
-               //repo.updateStaff(toUpdate,"lastName");
+               repo.updateStaff(toUpdate,"lastName");
                printEmptyLines();
                break;
             case 3:
                printEmptyLines();
-               //repo.updateStaff(toUpdate,"job");
+               repo.updateStaff(toUpdate,"job");
                printEmptyLines();
                break;
             case 4:
                printEmptyLines();
-               //repo.updateStaff(toUpdate,"address");
+               repo.updateStaff(toUpdate,"address");
                printEmptyLines();
                break;
             case 5:
                printEmptyLines();
-               //repo.updateStaff(toUpdate,"phoneNumber");
+               repo.updateStaff(toUpdate,"phoneNumber");
                printEmptyLines();
                break;
             case 6:
                printEmptyLines();
-               //repo.updateStaff(toUpdate,"CPR"); 
+               repo.updateStaff(toUpdate,"CPR"); 
                printEmptyLines();     
                break;
             case 7:
                printEmptyLines();
-               //repo.updateStaff(toUpdate,"hours");
+               repo.updateStaff(toUpdate,"hours");
                printEmptyLines();
                break;
             case 8:
                printEmptyLines();
-               //repo.updateStaff(toUpdate,"salary");
+               repo.updateStaff(toUpdate,"salary");
                printEmptyLines();
                break;
             case 9:
                printEmptyLines();
-               //repo.updateStaff(toUpdate,"everything");
+               repo.updateStaff(toUpdate,"everything");
                printEmptyLines();
                break;
             case 10:
@@ -536,4 +537,5 @@ public class Menu {
    public boolean isNotYesOrNO(String input) {
       return !(input.equalsIgnoreCase("N") || input.equalsIgnoreCase("NO") || input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("YES"));
    }
+   
 }

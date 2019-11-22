@@ -1,7 +1,8 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
+   //When we create a booking, we choose the dates and the program will display the rooms available 
+   //based on the roomID parameter from this class (which will be stored with the help of the room class
 public class Booking {
 
    //Attributes

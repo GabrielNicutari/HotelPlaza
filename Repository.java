@@ -96,9 +96,9 @@ public class Repository {
             s.getCpr().toLowerCase().equals(input.toLowerCase()))  {
                ok_object = true;
                if(!ok_headline)  {
-                  System.out.printf("%-5s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","ID","First Name",
+                  System.out.printf("%-5s%-21s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","ID","First Name",
                         "Last Name","Job","Address","Phone number","CPR","Working hours","Salary");
-                  System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
+                  System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
                   ok_headline = true;
                }
                s.displayAlligned();
@@ -118,9 +118,9 @@ public class Repository {
    public void displayStaff() throws IOException {
       System.out.println("Staff members");
       
-      System.out.printf("%-5s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","ID","First Name",
+      System.out.printf("%-5s%-21s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","ID","First Name",
                         "Last Name","Job","Address","Phone number","CPR","Working hours","Salary");
-      System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+      System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
       
       
       
@@ -131,32 +131,110 @@ public class Repository {
    
    //Update
    
-   public void updateStaff(int toUpdate, String task)  {
+   public void updateStaff(int toUpdate, String task)  throws IOException{
+      int remember = chooseStaff(toUpdate);
+      
+      String oldLine = staffList.get(remember).toString();
+      
       switch(task)   {
-         case "choose":
-            for(Staff s : staffList)   {
-               
-            }
-            break;
          case "firstName":
+            System.out.println("Type the new <First Name> of the staff member");
+            staffList.get(remember).setFirstName(console.nextLine());
             break;
          case "lastName":
+            System.out.println("Type the new <Last Name> of the staff member");
+            staffList.get(remember).setLastName(console.nextLine());
             break;
          case "job":
+            System.out.println("Type the new <Job> of the staff member");
+            staffList.get(remember).setJob(console.nextLine());
             break;
          case "address":
+            System.out.println("Type the new <Address> of the staff member");
+            staffList.get(remember).setAddress(console.nextLine());
             break;
          case "phoneNumber":
+            System.out.println("Type the new <Phone Number> of the staff member");
+            staffList.get(remember).setPhoneNumber(console.nextLine());
             break;
          case "CPR":
+            System.out.println("Type the new <CPR> of the staff member");
+            staffList.get(remember).setCpr(console.nextLine());
             break;
          case "hours":
+            System.out.println("Type the new <Hours Per Week> of the staff member");
+            staffList.get(remember).setHours(console.nextInt());
             break;
          case "salary":
+            System.out.println("Type the new <Salary> of the staff member");
+            staffList.get(remember).setSalary(console.nextInt());
             break; 
+         case "everything":
+           
+            System.out.println("Type the new <First Name> of the staff member");
+            staffList.get(remember).setFirstName(console.nextLine());
+            
+            System.out.println("Type the new <Last Name> of the staff member");
+            staffList.get(remember).setLastName(console.nextLine());
+            
+            System.out.println("Type the new <Job> of the staff member");
+            staffList.get(remember).setJob(console.nextLine());
+            
+            System.out.println("Type the new <Address> of the staff member");
+            staffList.get(remember).setAddress(console.nextLine());
+            
+            System.out.println("Type the new <Phone Number> of the staff member");
+            staffList.get(remember).setPhoneNumber(console.nextLine());
+            
+            System.out.println("Type the new <CPR> of the staff member");
+            staffList.get(remember).setCpr(console.nextLine());
+            
+            System.out.println("Type the new <Hours Per Week> of the staff member");
+            staffList.get(remember).setHours(console.nextInt());
+            
+            System.out.println("Type the new <Salary> of the staff member");
+            staffList.get(remember).setSalary(console.nextInt());
+            break;
          default:
             System.out.println("Wrong task");
       }
+      String newLine = staffList.get(remember).toString();
+      
+      modifyFile(oldLine,newLine,"Staff.txt");
+   }
+   
+   public int chooseStaff(int toUpdate)  {
+      int i;
+      for(i = 0 ; i < staffList.size(); i++)   {
+         if(staffList.get(i).getId() == toUpdate) {
+            return i;
+         }
+      }
+      return -1;
+   }
+   
+   public void deleteStaff()  throws FileNotFoundException, IOException{
+      System.out.println("Type the ID of the staff member you want to modify ");
+      
+      int toDelete = console.nextInt();
+      int remember = chooseStaff(toDelete);
+      
+      String firstName = staffList.get(remember).getFirstName();
+      String lastName = staffList.get(remember).getLastName();
+      
+      
+      System.out.println("Are you sure you want to delete the staff member " + firstName + " " + lastName + 
+                        "? (Type \"Y/YES\" or \"N/NO\")");
+               
+      String input = console.next();
+      while(isNotYesOrNO(input)) {     //Input Validation
+         System.out.println("Wrong input. Type Type \"Y/YES\" or \"N/NO\"");
+         input = console.next(); 
+      }
+      
+      deleteFromFile(staffList.get(remember).toString(),"Staff.txt");   //Delete from file                  
+      staffList.remove(remember);   //Delete from array  
+      System.out.println("The staff member has been deleted");
    }
      
             //Rooms\\
@@ -380,6 +458,60 @@ public class Repository {
          endDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
       }
       return endDate;
+   }
+   
+         //FILES\\
+   
+   //Modify
+   
+   public void modifyFile(String oldLine, String newLine, String fileName) throws IOException   {
+      String line = "";
+      String oldText = "";
+      BufferedReader input = new BufferedReader(new FileReader(fileName));
+      
+      while((line = input.readLine())!= null)  {
+         oldText += line + "\r\n";
+      }
+      
+      input.close();
+      
+      String newText = oldText.replaceAll(oldLine,newLine);
+      
+      FileWriter output = new FileWriter(fileName);
+      output.write(newText);
+      output.close();
+   }
+   
+   public void deleteFromFile(String lineToDelete, String fileName)  throws FileNotFoundException, IOException{
+      File inputFile = new File(fileName);
+      File tempFile = new File("myTempFile.txt");
+   
+      BufferedReader input = new BufferedReader(new FileReader(inputFile));
+      BufferedWriter output = new BufferedWriter(new FileWriter(tempFile));
+      
+      String currentLine;
+      int line = 0;
+      while((currentLine = input.readLine()) != null) {
+         String trimmedLine = currentLine.trim();
+         line++;
+         if(trimmedLine.equals(lineToDelete))   
+            continue;
+         
+         if(line != staffList.size()) {
+            output.write(currentLine + System.getProperty("line.separator"));
+         }  else {
+            output.write(currentLine);
+         }
+      }
+      output.close();
+      input.close();
+      inputFile.setWritable(true);
+      inputFile.delete();
+      boolean successful = tempFile.renameTo(inputFile);
+   }
+   
+   public boolean isNotYesOrNO(String input) {
+      return !(input.equalsIgnoreCase("N") || input.equalsIgnoreCase("NO") || input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("YES"));
    }
 }
 
