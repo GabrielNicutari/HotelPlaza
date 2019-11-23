@@ -138,6 +138,7 @@ public class Menu {
    public void searchStaff()  throws IOException   {
       int choice = -1;
       boolean repeat = true;
+      boolean updated = false;
       
       do {
          System.out.println("SEARCH STAFF MENU");
@@ -161,24 +162,26 @@ public class Menu {
             
                updateStaff();
                repeat = false;
+               updated = true;
                printEmptyLines();
                break;
                
             case 2:
             
-               repo.deleteStaff();
-               repeat = false;
+               repeat = repo.deleteStaff();
+               updated = true;
                printEmptyLines();
                break;
                
             case 3:
+               //repeat = true;
                break;
                
             default:
                printEmptyLines();
                System.out.println("Choice must be a value between \"1\" and \"3\".");
          }
-      }while(choice != 3); 
+      }while(choice != 3 && !updated); 
    }
    
    //Update

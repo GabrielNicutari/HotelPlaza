@@ -90,7 +90,7 @@ public class Repository {
    
    public void searchStaff() throws IOException {
       
-      String input = console.nextLine();
+      String input = br.readLine();
       
       System.out.println();
                         
@@ -148,76 +148,76 @@ public class Repository {
          case "firstName":
          
             System.out.println("Type the new <First Name> of the staff member");
-            staffList.get(remember).setFirstName(console.nextLine());
+            staffList.get(remember).setFirstName(br.readLine());
             break;
             
          case "lastName":
          
             System.out.println("Type the new <Last Name> of the staff member");
-            staffList.get(remember).setLastName(console.nextLine());
+            staffList.get(remember).setLastName(br.readLine());
             break;
             
          case "job":
          
             System.out.println("Type the new <Job> of the staff member");
-            staffList.get(remember).setJob(console.nextLine());
+            staffList.get(remember).setJob(br.readLine());
             break;
             
          case "address":
          
             System.out.println("Type the new <Address> of the staff member");
-            staffList.get(remember).setAddress(console.nextLine());
+            staffList.get(remember).setAddress(br.readLine());
             break;
             
          case "phoneNumber":
          
             System.out.println("Type the new <Phone Number> of the staff member");
-            staffList.get(remember).setPhoneNumber(console.nextLine());
+            staffList.get(remember).setPhoneNumber(br.readLine());
             break;
             
          case "CPR":
          
             System.out.println("Type the new <CPR> of the staff member");
-            staffList.get(remember).setCpr(console.nextLine());
+            staffList.get(remember).setCpr(br.readLine());
             break;
             
          case "hours":
          
             System.out.println("Type the new <Hours Per Week> of the staff member");
-            staffList.get(remember).setHours(console.nextInt());
+            staffList.get(remember).setHours(Integer.valueOf(br.readLine()));
             break;
             
          case "salary":
          
             System.out.println("Type the new <Salary> of the staff member");
-            staffList.get(remember).setSalary(console.nextInt());
+            staffList.get(remember).setSalary(Integer.valueOf(br.readLine()));
             break; 
             
          case "everything":
            
             System.out.println("Type the new <First Name> of the staff member");
-            staffList.get(remember).setFirstName(console.nextLine());
+            staffList.get(remember).setFirstName(br.readLine());
             
             System.out.println("Type the new <Last Name> of the staff member");
-            staffList.get(remember).setLastName(console.nextLine());
+            staffList.get(remember).setLastName(br.readLine());
             
             System.out.println("Type the new <Job> of the staff member");
-            staffList.get(remember).setJob(console.nextLine());
+            staffList.get(remember).setJob(br.readLine());
             
             System.out.println("Type the new <Address> of the staff member");
-            staffList.get(remember).setAddress(console.nextLine());
+            staffList.get(remember).setAddress(br.readLine());
             
             System.out.println("Type the new <Phone Number> of the staff member");
-            staffList.get(remember).setPhoneNumber(console.nextLine());
+            staffList.get(remember).setPhoneNumber(br.readLine());
             
             System.out.println("Type the new <CPR> of the staff member");
-            staffList.get(remember).setCpr(console.nextLine());
+            staffList.get(remember).setCpr(br.readLine());
             
             System.out.println("Type the new <Hours Per Week> of the staff member");
-            staffList.get(remember).setHours(console.nextInt());
+            staffList.get(remember).setHours(Integer.valueOf(br.readLine()));
             
             System.out.println("Type the new <Salary> of the staff member");
-            staffList.get(remember).setSalary(console.nextInt());
+            staffList.get(remember).setSalary(Integer.valueOf(br.readLine()));
             break;
             
          default:
@@ -231,7 +231,7 @@ public class Repository {
    
    //Delete
    
-   public void deleteStaff()  throws FileNotFoundException, IOException {
+   public boolean deleteStaff()  throws FileNotFoundException, IOException {
       System.out.println("Type the ID of the staff member you want to delete ");
       
       int toDelete = console.nextInt();
@@ -250,6 +250,10 @@ public class Repository {
          deleteFromFile(staffList.get(remember).toString(),"Staff.txt");   //Delete from file                  
          staffList.remove(remember);   //Delete from array  
          System.out.println("The staff member has been deleted");
+         
+         return false;
+      }  else  {
+         return true;
       }
    }
    
@@ -439,7 +443,7 @@ public class Repository {
             
          case "internet":
             
-            System.out.println("Type whether the room has <Internet Connection> or not");
+            System.out.println("Type whether you want the room to have <Internet Connection> or not");
             roomList.get(remember).setInternet(Boolean.valueOf(br.readLine()));
             break;
             
