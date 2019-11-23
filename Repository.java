@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Repository {
 
    Scanner console = new Scanner(System.in);
+   BufferedReader br = new BufferedReader(new InputStreamReader(System.in));  //Used for console input to avoid scanner skip issue
    
    //Arraylists
    
@@ -94,14 +95,14 @@ public class Repository {
          if (s.getJob().toLowerCase().contains(input.toLowerCase()) || 
             s.getFirstName().toLowerCase().contains(input.toLowerCase()) ||
             s.getCpr().toLowerCase().equals(input.toLowerCase()))  {
-               ok_object = true;
-               if(!ok_headline)  {
-                  System.out.printf("%-5s%-21s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","ID","First Name",
+            ok_object = true;
+            if(!ok_headline)  {
+               System.out.printf("%-5s%-21s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","ID","First Name",
                         "Last Name","Job","Address","Phone number","CPR","Working hours","Salary");
-                  System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
-                  ok_headline = true;
-               }
-               s.displayAlligned();
+               System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
+               ok_headline = true;
+            }
+            s.displayAlligned();
          }
       }
       
@@ -214,7 +215,7 @@ public class Repository {
    }
    
    public void deleteStaff()  throws FileNotFoundException, IOException{
-      System.out.println("Type the ID of the staff member you want to modify ");
+      System.out.println("Type the ID of the staff member you want to delete ");
       
       int toDelete = console.nextInt();
       int remember = chooseStaff(toDelete);
@@ -223,24 +224,23 @@ public class Repository {
       String lastName = staffList.get(remember).getLastName();
       
       
-      System.out.println("Are you sure you want to delete the staff member " + firstName + " " + lastName + 
-                        "? (Type \"Y/YES\" or \"N/NO\")");
-               
-      String input = console.next();
-      while(isNotYesOrNO(input)) {     //Input Validation
-         System.out.println("Wrong input. Type Type \"Y/YES\" or \"N/NO\"");
-         input = console.next(); 
-      }
+      System.out.println("Are you sure you want to delete the staff member <" + firstName + " " + lastName + 
+                        ">? (Type \"Y/YES\" or \"N/NO\")");
       
-      deleteFromFile(staffList.get(remember).toString(),"Staff.txt");   //Delete from file                  
-      staffList.remove(remember);   //Delete from array  
-      System.out.println("The staff member has been deleted");
+      String answer = isYesOrNo();
+      
+      if(answer.equalsIgnoreCase("YES") || answer.equalsIgnoreCase("Y"))   {
+         deleteFromFile(staffList.get(remember).toString(),"Staff.txt");   //Delete from file                  
+         staffList.remove(remember);   //Delete from array  
+         System.out.println("The staff member has been deleted");
+      }
    }
      
             //Rooms\\
-    //Input
+   
+   //Input
     
-    public void inputRoom() throws FileNotFoundException, IOException   {
+   public void inputRoom() throws FileNotFoundException, IOException   {
                                           
       BufferedReader input = new BufferedReader(new FileReader("Room.txt"));
       
@@ -250,26 +250,111 @@ public class Repository {
          String[] split = line.split("     ");
          
          roomList.add(new Room(Integer.valueOf(split[0]),Integer.valueOf(split[1]),
-                               Boolean.valueOf(split[2]),Integer.valueOf(split[3]),Integer.valueOf(split[4]),Boolean.valueOf(split[5])));
+                               Boolean.valueOf(split[2]),Integer.valueOf(split[3]),Integer.valueOf(split[4])));
       }
       input.close();
    }
             
-   //Display
+   //Display (based on filters)
    
-   public void displayRoom() throws IOException {
-      System.out.println("Room overveiw");
+   public void displayRoom(String task) throws IOException {
       
-      System.out.printf("%-15s%-15s%-15s%-15s%-15s%n","RoomID",
-                        "Beds","Wifi","Floor","Price per night");
-      System.out.println("------------------------------------------------------------------------------------------------------------------------------");
-      
-      for (int i=0; i < roomList.size(); i++) {
-         roomList.get(i).displayAlligenedRoom();
+      switch(task)   {
+         case "beds":
+            
+            System.out.println("Choose the amount of beds");
+            int beds = console.nextInt();
+            
+            roomHeadline();
+            
+            for(int i = 0; i < roomList.size(); i++)   {
+               if(beds == roomList.get(i).getNumOfBeds())   {
+                  roomList.get(i).displayAlligned();
+               }
+            }
+            break;
+         
+         case "internet":
+            
+            System.out.println("Do you want to display the ones with wi-fi connection? (Type \"Y/YES\" or \"N/NO\")");
+            
+            String answer = isYesOrNo();
+            
+            if(answer.equalsIgnoreCase("YES") || answer.equalsIgnoreCase("Y"))   {
+               
+               roomHeadline();
+               
+               for(int i = 0; i < roomList.size(); i++)   {
+                  if(roomList.get(i).getInternet())   {     
+                     roomList.get(i).displayAlligned();        //Display the ones with wi-fi
+                  }
+               }
+            }  else {      //It's gonna be a "NO/N" anyway, because of the isYesOrNO() method
+               
+               roomHeadline();
+               
+               for(int i = 0; i < roomList.size(); i++)   {
+                  if(!roomList.get(i).getInternet())   {    
+                     roomList.get(i).displayAlligned();       //Display the ones without wi-fi
+                  }
+               }
+               
+            }
+            break;
+         
+         case "floor":
+            
+            System.out.println("Choose the floor number");
+            int floor = console.nextInt();
+            
+            roomHeadline();
+            
+            for(int i = 0; i < roomList.size(); i++)   {
+               if(floor == roomList.get(i).getFloor())   {
+                  roomList.get(i).displayAlligned();
+               }
+            }
+            break;
+            
+         case "price":
+            
+            System.out.println("Choose the price"); //Maybe we can go for ranges here, but usually, rooms have fixed prices)
+            
+            int price = console.nextInt();
+            
+            roomHeadline();
+            
+            for(int i = 0; i < roomList.size(); i++)   {
+               if(price == roomList.get(i).getPrice())   {
+                  roomList.get(i).displayAlligned();
+               }
+            }
+            
+            break;
+            
+         default:
+            System.out.printf("%-15s%-15s%-15s%-15s%-15s%n","RoomID",
+                              "Beds","Wifi","Floor","Price per night");
+            System.out.println("-------------------------------------------------------------------------------------------");
+            
+            for (int i=0; i < roomList.size(); i++) {
+               roomList.get(i).displayAlligned();
+            }
       }
+   }
+   
+   //Prints the headline of room attributes
+   
+   public void roomHeadline()   {
+      System.out.println();
+            
+      System.out.printf("%-15s%-15s%-15s%-15s%-15s%n","RoomID",
+                              "Beds","Wifi","Floor","Price per night");
+      System.out.println("-------------------------------------------------------------------------------------------");
    }
     
    //Create
+   
    public void createRoom() throws IOException {
       Room room = new Room();
       
@@ -283,10 +368,10 @@ public class Repository {
       String word = console.next();
       if (word.equals("yes")){
          room.setInternet(true);
-         }
+      }
       if (word.equals("no")){
          room.setInternet(false);
-         }   
+      }   
       
       System.out.println("Floor:");
       room.setFloor(validateInput());
@@ -294,7 +379,8 @@ public class Repository {
       System.out.println("Price per night:");
       room.setPrice(validateInput());
       
-      room.setAvailability(true);
+      //Adding the ID, which is based on the index in the array
+      room.setID(roomList.size() + 1);
       
       //Adding the room object to the arraylist.
       roomList.add(room);
@@ -305,7 +391,63 @@ public class Repository {
       output.write(roomList.get(roomList.size() - 1).toString());
       output.close();
       
+   }
+   
+   public void updateRoom(int toUpdate, String task)  throws IOException  {
+      
+      int remember = chooseRoom(toUpdate);
+      
+      String oldLine = roomList.get(remember).toString();
+      
+      switch(task)   {
+         case "numOfBeds":
+            
+            System.out.println("Type the new <Number Of Beds> of the room");
+            roomList.get(remember).setNumOfBeds(Integer.valueOf(br.readLine()));
+            break;
+            
+         case "internet":
+            
+            System.out.println("Type whether the room has <Internet Connection> or not");
+            roomList.get(remember).setInternet(Boolean.valueOf(br.readLine()));
+            break;
+            
+         case "price":
+            
+            System.out.println("Type the new <Job> of the staff member");
+            roomList.get(remember).setPrice(Integer.valueOf(br.readLine()));
+            break;
+                   
+         case "everything":
+            
+            System.out.println("Type the new <Number Of Beds> of the room");
+            roomList.get(remember).setNumOfBeds(console.nextInt());
+            
+            System.out.println("Type whether the room has <Internet Connection> or not");
+            roomList.get(remember).setInternet(Boolean.valueOf(br.readLine()));
+            
+            System.out.println("Type the new <Price> of the room");
+            roomList.get(remember).setPrice(console.nextInt());
+               
+            break;
+            
+         default:
+            System.out.println("Wrong task");
       }
+      String newLine = roomList.get(remember).toString();
+      
+      modifyFile(oldLine,newLine,"Room.txt");   
+   }
+   
+   public int chooseRoom(int toUpdate)  {
+      int i;
+      for(i = 0 ; i < roomList.size(); i++)   {
+         if(roomList.get(i).getID() == toUpdate) {
+            return i;
+         }
+      }
+      return -1;
+   }
       
             //Guest\\
    //Input
@@ -415,7 +557,7 @@ public class Repository {
       Booking booking = new Booking();
       
       System.out.println("StartDate:");
- 
+   
       Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.nextLine());
       booking.setStartDate(startDate);
       
@@ -508,6 +650,15 @@ public class Repository {
       inputFile.setWritable(true);
       inputFile.delete();
       boolean successful = tempFile.renameTo(inputFile);
+   }
+   
+   public String isYesOrNo() {
+      String input = console.next();
+      while(isNotYesOrNO(input)) {     //Input Validation
+         System.out.println("Wrong input. Type Type \"Y/YES\" or \"N/NO\"");
+         input = console.next(); 
+      }
+      return input;
    }
    
    public boolean isNotYesOrNO(String input) {

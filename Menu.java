@@ -118,8 +118,8 @@ public class Menu {
          
          switch(choice) {
             case 1:
-               printEmptyLines();
-               repo.displayRoom();
+               System.out.println();
+               repo.displayRoom("all");
                doesStop();
                printEmptyLines();
                break;
@@ -256,55 +256,50 @@ public class Menu {
                printEmptyLines();
                System.out.println("Choice must be a value between \"1\" and \"3\".");
          }
-      }while(choice != 3);
+      }while(choice != 3); 
    }  
    
-   public void searchRoom()  {
+   public void searchRoom()  throws IOException{
       int choice = -1;
-      do {
-         System.out.println("SEARCH ROOM MENU");
-         System.out.println("****************************");
-         System.out.println("");
+      boolean repeat = true;
+      
+      System.out.println("SEARCH ROOM MENU");
+      System.out.println("****************************");
          
-         //repo.searchRoom();
-         chooseRoomFilter();
+      do {
+         if(repeat)  {
+            chooseRoomFilter();
+         }
          
          System.out.println("Choose an option: ");
          System.out.println("[1] Further filter");
          System.out.println("[2] Update");
-         System.out.println("[3] Delete");   //We can't delete rooms, I think
-         System.out.println("[4] Go Back");
+         System.out.println("[3] Go Back");
          System.out.println("============================");
          
-         choice = validateInput(choice,4);
+         choice = validateInput(choice,3);
          
          switch(choice) {
             case 1:
-               // goes through the loop again
+               repeat = true;
                break;
             case 2:
-               printEmptyLines();
-               //repo.updateRoom();
+               updateRoom();     //Another menu
+               repeat = false;
                printEmptyLines();
                break;
             case 3:
-               printEmptyLines();
-               //repo.deleteRoom();    //Probably not
-               printEmptyLines();
-               break;
-            case 4:
                break;
             default:
                printEmptyLines();
-               System.out.println("Choice must be a value between \"1\" and \"4\".");
+               System.out.println("Choice must be a value between \"1\" and \"3\".");
          }
-      }while(choice != 4);
+      }while(choice != 3);
    }
    
-   public void chooseRoomFilter()   {
+   public void chooseRoomFilter()   throws IOException{
       int choice = -1;
-      do {
-         System.out.println("****************************");
+         
          System.out.println("Choose a filter: ");
          System.out.println("[1] Number of beds");
          System.out.println("[2] Internet connection");
@@ -317,32 +312,92 @@ public class Menu {
          
          switch(choice) {
             case 1:
-               printEmptyLines();
-               //repo.displayRoom("beds");
-               printEmptyLines();
+               System.out.println();
+               repo.displayRoom("beds");
+               System.out.println();
                break;
             case 2:
-               printEmptyLines();
-               //repo.displayRoom("internet");
-               printEmptyLines();
+               System.out.println();
+               repo.displayRoom("internet");
+               System.out.println();
                break;
             case 3:
-               printEmptyLines();
-               //repo.displayRoom("floor");
-               printEmptyLines();
+               System.out.println();
+               repo.displayRoom("floor");
+               System.out.println();
                break;
             case 4:
-               printEmptyLines();
-               //repo.displayRoom("price");
-               printEmptyLines();
+               System.out.println();
+               repo.displayRoom("price");
+               System.out.println();
                break;
             case 5:
                break;
             default:
                printEmptyLines();
-               System.out.println("Choice must be a value between \"1\" and \"3\".");
+               System.out.println("Choice must be a value between \"1\" and \"5\".");
          }
-      }while(choice != 5);
+   }
+   
+   public void updateRoom()   throws IOException{
+      System.out.println("Type the ID of the room you want to modify");
+      
+      int toUpdate = console.nextInt();
+      
+      int choice = -1;
+      
+      //I don't think we ever need to update floor tho
+      
+      do {
+         System.out.println();
+         System.out.println("Choose what to modify: ");
+         System.out.println("[1] Number Of Beds ");
+         System.out.println("[2] Internet Connection");
+         System.out.println("[3] Price");
+         System.out.println("[4] Everything");
+         System.out.println("[5] Go back");
+         
+         choice = validateInput(choice,5);
+         
+         switch(choice) {
+            case 1:
+            
+               printEmptyLines();
+               repo.updateRoom(toUpdate,"numOfBeds");
+               printEmptyLines();
+               break;
+               
+            case 2:
+            
+               printEmptyLines();
+               repo.updateRoom(toUpdate,"internet");
+               printEmptyLines();
+               break;
+               
+            case 3:
+            
+               printEmptyLines();
+               repo.updateRoom(toUpdate,"price");
+               printEmptyLines();
+               break;
+               
+            case 4:
+               
+               printEmptyLines();
+               repo.updateRoom(toUpdate,"everything");
+               printEmptyLines();
+               break;
+            
+            case 5:
+               
+               break;
+               
+            default:
+               printEmptyLines();
+               System.out.println("Choice must be a value between \"1\" and \"5\".");
+         }
+         
+      }  while(choice != 5);
    }
    
    public void searchGuest() {
