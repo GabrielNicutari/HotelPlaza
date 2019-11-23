@@ -2,7 +2,7 @@ public class Staff {
    
    //Attributes
    
-   private int id;
+   private int ID;
    private String firstName;
    private String lastName;
    private String job;
@@ -17,8 +17,8 @@ public class Staff {
    
    public Staff() {}
    
-   public Staff(int id, String firstName, String lastName, String job, String address, String phoneNumber, String cpr, int hours, int salary) {
-      this.id = id;
+   public Staff(int ID, String firstName, String lastName, String job, String address, String phoneNumber, String cpr, int hours, int salary) {
+      this.ID = ID;
       this.firstName = firstName;
       this.lastName = lastName;
       this.job = job;
@@ -31,8 +31,8 @@ public class Staff {
    
    //Getters and Setters
    
-   public void setId(int id)  {
-      this.id = id;
+   public void setID(int ID)  {
+      this.ID = ID;
    }
    
    public void setFirstName(String name) {
@@ -67,8 +67,8 @@ public class Staff {
       this.salary = salary;
    }
    
-   public int getId()   {
-      return id;
+   public int getID()   {
+      return ID;
    }
    
    public String getFirstName() {
@@ -107,12 +107,12 @@ public class Staff {
    //Printers
    
    public String toString() {    //Only used when we print to file
-      return id + "     " + firstName + "     " + lastName + "     " + job + "     " + address + "     " 
+      return ID + "     " + firstName + "     " + lastName + "     " + job + "     " + address + "     " 
       + phoneNumber + "     " + cpr + "     " + hours + "     " + salary;
    }
    
    public void displayAlligned() {     //Only used when we print to console
-      System.out.printf("%-5d%-21s%-21s%-20s%-20s%-15s%-12s%-16d%-15d%n",id,firstName,
+      System.out.printf("%-5d%-21s%-21s%-20s%-20s%-15s%-12s%-16d%-15d%n",ID,firstName,
                         lastName,job,address,phoneNumber,cpr,hours,salary);
    }
 }

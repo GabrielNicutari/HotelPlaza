@@ -71,7 +71,7 @@ public class Repository {
       System.out.println("Monthly Salary:");
       staff.setSalary(validateInput());
       
-      staff.setId(maxID + 1);
+      staff.setID(maxID + 1);
       maxID++;
       
       staffList.add(staff);
@@ -262,7 +262,7 @@ public class Repository {
    public int chooseStaff(int toUpdate)  {
       int i;
       for(i = 0 ; i < staffList.size(); i++)   {
-         if(staffList.get(i).getId() == toUpdate) {
+         if(staffList.get(i).getID() == toUpdate) {
             return i;
          }
       }
