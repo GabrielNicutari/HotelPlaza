@@ -1,10 +1,17 @@
 public class Room {
+
+   //Attributes
+   
    private int ID;
    private int numOfBeds;
    private boolean internet;
    private int floor;
    private int price;
-
+   
+   //Constructors
+   
+   public Room() {}
+   
    public Room(int ID, int numOfBeds, boolean internet, int floor, int price){
        this.ID = ID;
        this.numOfBeds = numOfBeds;
@@ -12,10 +19,8 @@ public class Room {
        this.floor = floor;
        this.price = price;
    }
-
-   public Room() {}
    
-   //Getters and setters
+   //Getters and Setters
    public int getID()  {
        return ID;
    }
@@ -32,11 +37,11 @@ public class Room {
        this.numOfBeds = numOfBeds;
    }
    
-   public boolean getInternet(){
+   public boolean getInternet()  {
        return internet;
    }
    
-   public void setInternet(boolean internet){
+   public void setInternet(boolean internet) {
        this.internet = internet;
    }
    
@@ -56,13 +61,13 @@ public class Room {
        this.price = price;
    }
 
-   //To string
-   public String toString()   {
-      return ID + "     " + numOfBeds + "     " + internet + "     " + floor + "     " 
-             + price;
+   //Printers
+   
+   public String toString()   {     //Only used when we print to file
+      return ID + "     " + numOfBeds + "     " + internet + "     " + floor + "     " + price;
    }
    
-   public void displayAlligned() {
+   public void displayAlligned() {     //Only used when we print to console
       System.out.printf("%-15d%-15d%-15b%-15d%-15d%n",ID,
                         numOfBeds,internet,floor,price);
    }

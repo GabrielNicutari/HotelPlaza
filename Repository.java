@@ -4,9 +4,11 @@ import java.text.*;
 import java.time.format.DateTimeFormatter;
 
 public class Repository {
-
+   
+   //Console inputs
+   
    Scanner console = new Scanner(System.in);
-   BufferedReader br = new BufferedReader(new InputStreamReader(System.in));  //Used for console input to avoid scanner skip issue
+   BufferedReader br = new BufferedReader(new InputStreamReader(System.in));  //Used to avoid scanner skip issue
    
    //Arraylists
    
@@ -15,7 +17,8 @@ public class Repository {
    ArrayList<Guest> guestList = new ArrayList<>();
    ArrayList<Booking> bookingList = new ArrayList<>();
    
-            //Staff\\
+            
+            //STAFF FUNCTIONALITY\\
    
    //Input
    
@@ -23,7 +26,7 @@ public class Repository {
                                           
       BufferedReader input = new BufferedReader(new FileReader("Staff.txt"));
       
-      String line ="";
+      String line = "";
       
       while((line = input.readLine()) != null)  {
          String[] split = line.split("     ");
@@ -32,6 +35,7 @@ public class Repository {
                                  Integer.valueOf(split[8])));
          maxID++;
       }
+      
       input.close();
       return maxID;
    }
@@ -72,7 +76,7 @@ public class Repository {
       
       staffList.add(staff);
             
-      BufferedWriter output = new BufferedWriter(new FileWriter("Staff.txt", true));
+      BufferedWriter output = new BufferedWriter(new FileWriter("Staff.txt", true));   //Append
       
       output.newLine();
       output.write(staffList.get(staffList.size() - 1).toString());
@@ -83,6 +87,7 @@ public class Repository {
   
    
    //Search  
+   
    public void searchStaff() throws IOException {
       
       String input = console.nextLine();
@@ -92,16 +97,20 @@ public class Repository {
       boolean ok_object = false, ok_headline = false;
       
       for(Staff s : staffList) {
+      
          if (s.getJob().toLowerCase().contains(input.toLowerCase()) || 
             s.getFirstName().toLowerCase().contains(input.toLowerCase()) ||
             s.getCpr().toLowerCase().equals(input.toLowerCase()))  {
+            
             ok_object = true;
+            
             if(!ok_headline)  {
                System.out.printf("%-5s%-21s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","ID","First Name",
                         "Last Name","Job","Address","Phone number","CPR","Working hours","Salary");
                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
                ok_headline = true;
             }
+            
             s.displayAlligned();
          }
       }
@@ -122,9 +131,7 @@ public class Repository {
       System.out.printf("%-5s%-21s%-21s%-20s%-20s%-15s%-12s%-16s%-15s%n","ID","First Name",
                         "Last Name","Job","Address","Phone number","CPR","Working hours","Salary");
       System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
-      
-      
-      
+
       for (int i=0; i < staffList.size(); i++) {
          staffList.get(i).displayAlligned();
       }
@@ -132,44 +139,60 @@ public class Repository {
    
    //Update
    
-   public void updateStaff(int toUpdate, String task)  throws IOException{
+   public void updateStaff(int toUpdate, String task)  throws IOException  {
       int remember = chooseStaff(toUpdate);
-      
+
       String oldLine = staffList.get(remember).toString();
       
       switch(task)   {
          case "firstName":
+         
             System.out.println("Type the new <First Name> of the staff member");
             staffList.get(remember).setFirstName(console.nextLine());
             break;
+            
          case "lastName":
+         
             System.out.println("Type the new <Last Name> of the staff member");
             staffList.get(remember).setLastName(console.nextLine());
             break;
+            
          case "job":
+         
             System.out.println("Type the new <Job> of the staff member");
             staffList.get(remember).setJob(console.nextLine());
             break;
+            
          case "address":
+         
             System.out.println("Type the new <Address> of the staff member");
             staffList.get(remember).setAddress(console.nextLine());
             break;
+            
          case "phoneNumber":
+         
             System.out.println("Type the new <Phone Number> of the staff member");
             staffList.get(remember).setPhoneNumber(console.nextLine());
             break;
+            
          case "CPR":
+         
             System.out.println("Type the new <CPR> of the staff member");
             staffList.get(remember).setCpr(console.nextLine());
             break;
+            
          case "hours":
+         
             System.out.println("Type the new <Hours Per Week> of the staff member");
             staffList.get(remember).setHours(console.nextInt());
             break;
+            
          case "salary":
+         
             System.out.println("Type the new <Salary> of the staff member");
             staffList.get(remember).setSalary(console.nextInt());
             break; 
+            
          case "everything":
            
             System.out.println("Type the new <First Name> of the staff member");
@@ -196,29 +219,23 @@ public class Repository {
             System.out.println("Type the new <Salary> of the staff member");
             staffList.get(remember).setSalary(console.nextInt());
             break;
+            
          default:
             System.out.println("Wrong task");
       }
+      
       String newLine = staffList.get(remember).toString();
       
       modifyFile(oldLine,newLine,"Staff.txt");
    }
    
-   public int chooseStaff(int toUpdate)  {
-      int i;
-      for(i = 0 ; i < staffList.size(); i++)   {
-         if(staffList.get(i).getId() == toUpdate) {
-            return i;
-         }
-      }
-      return -1;
-   }
+   //Delete
    
-   public void deleteStaff()  throws FileNotFoundException, IOException{
+   public void deleteStaff()  throws FileNotFoundException, IOException {
       System.out.println("Type the ID of the staff member you want to delete ");
       
       int toDelete = console.nextInt();
-      int remember = chooseStaff(toDelete);
+      int remember = chooseStaff(toDelete);  
       
       String firstName = staffList.get(remember).getFirstName();
       String lastName = staffList.get(remember).getLastName();
@@ -235,8 +252,20 @@ public class Repository {
          System.out.println("The staff member has been deleted");
       }
    }
+   
+   //Choose Who To Update/Delete
+   
+   public int chooseStaff(int toUpdate)  {
+      int i;
+      for(i = 0 ; i < staffList.size(); i++)   {
+         if(staffList.get(i).getId() == toUpdate) {
+            return i;
+         }
+      }
+      return -1;
+   }
      
-            //Rooms\\
+            //ROOM FUNCTIONALITY\\
    
    //Input
     
@@ -332,7 +361,7 @@ public class Repository {
             
             break;
             
-         default:
+         default:    //Display All
             System.out.printf("%-15s%-15s%-15s%-15s%-15s%n","RoomID",
                               "Beds","Wifi","Floor","Price per night");
             System.out.println("-------------------------------------------------------------------------------------------");
@@ -363,13 +392,13 @@ public class Repository {
       System.out.println("Number of beds: ");
       room.setNumOfBeds(validateInput());
       
-      System.out.println("Internet:");
-      System.out.println("Type yes or no:");
-      String word = console.next();
-      if (word.equals("yes")){
+      System.out.println("Internet: (Type \"Y/YES\" or \"N/NO\")");
+      
+      String answer = isYesOrNo();
+      
+      if (answer.equalsIgnoreCase("YES") || answer.equalsIgnoreCase("Y"))  {
          room.setInternet(true);
-      }
-      if (word.equals("no")){
+      }  else  {     //It's "NO" or "N" anyway
          room.setInternet(false);
       }   
       
@@ -385,13 +414,15 @@ public class Repository {
       //Adding the room object to the arraylist.
       roomList.add(room);
       
-      BufferedWriter output = new BufferedWriter(new FileWriter("Room.txt", true));
+      BufferedWriter output = new BufferedWriter(new FileWriter("Room.txt", true));    //Append
       
       output.newLine();
       output.write(roomList.get(roomList.size() - 1).toString());
       output.close();
       
    }
+   
+   //Update
    
    public void updateRoom(int toUpdate, String task)  throws IOException  {
       
@@ -434,10 +465,13 @@ public class Repository {
          default:
             System.out.println("Wrong task");
       }
+      
       String newLine = roomList.get(remember).toString();
       
       modifyFile(oldLine,newLine,"Room.txt");   
    }
+   
+   //Choose Which Room To Update
    
    public int chooseRoom(int toUpdate)  {
       int i;
@@ -449,7 +483,8 @@ public class Repository {
       return -1;
    }
       
-            //Guest\\
+            //GUEST FUNCTIONALITY\\
+            
    //Input
    
    public int inputGuest(int maxID) throws FileNotFoundException, IOException   {
@@ -477,7 +512,7 @@ public class Repository {
       System.out.println("------------------------------------------------------------------------------------------------------------------------------");
       
       for (int i=0; i < guestList.size(); i++) {
-         guestList.get(i).displayAlligenedGuest();
+         guestList.get(i).displayAlligned();
       }
    }
     
@@ -516,7 +551,7 @@ public class Repository {
    
    
    
-         //Booking\\
+            //BOOKING FUNCTIONALITY\\
    
    //Input
    
@@ -580,7 +615,9 @@ public class Repository {
       output.close(); 
    }
 
-   //Validation for integers
+               //VALIDATIONS\\
+   
+   //Integers
    
    public int validateInput()  {
       Scanner console = new Scanner(System.in);
@@ -592,7 +629,9 @@ public class Repository {
       int choice = console.nextInt();
       return choice;
    }
-      
+   
+   //Dates
+   
    public Date validateDate(Date startDate, Date endDate) throws ParseException {
       
       while(endDate.before(startDate))  {
@@ -602,9 +641,24 @@ public class Repository {
       return endDate;
    }
    
-         //FILES\\
+   //Yes / No
    
-   //Modify
+   public String isYesOrNo() {
+      String input = console.next();
+      while(isNotYesOrNO(input)) {     //Input Validation
+         System.out.println("Wrong input. Type \"Y/YES\" or \"N/NO\"");
+         input = console.next(); 
+      }
+      return input;
+   }
+   
+   public boolean isNotYesOrNO(String input) {
+      return !(input.equalsIgnoreCase("N") || input.equalsIgnoreCase("NO") || input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("YES"));
+   }
+   
+            //FILES UPDATE\\
+   
+   //Modify (in)
    
    public void modifyFile(String oldLine, String newLine, String fileName) throws IOException   {
       String line = "";
@@ -623,6 +677,8 @@ public class Repository {
       output.write(newText);
       output.close();
    }
+   
+   //Delete (from)
    
    public void deleteFromFile(String lineToDelete, String fileName)  throws FileNotFoundException, IOException{
       File inputFile = new File(fileName);
@@ -650,19 +706,6 @@ public class Repository {
       inputFile.setWritable(true);
       inputFile.delete();
       boolean successful = tempFile.renameTo(inputFile);
-   }
-   
-   public String isYesOrNo() {
-      String input = console.next();
-      while(isNotYesOrNO(input)) {     //Input Validation
-         System.out.println("Wrong input. Type Type \"Y/YES\" or \"N/NO\"");
-         input = console.next(); 
-      }
-      return input;
-   }
-   
-   public boolean isNotYesOrNO(String input) {
-      return !(input.equalsIgnoreCase("N") || input.equalsIgnoreCase("NO") || input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("YES"));
    }
 }
 

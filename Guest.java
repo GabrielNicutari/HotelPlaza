@@ -1,12 +1,17 @@
 public class Guest {
   
    //Atrributes
-   private String lastName;
+   
    private String firstName;
+   private String lastName;
    private String address;
    private String phonenumber;
    private int guestID;
-
+   
+   //Constructors
+   
+   public Guest() {}
+   
    public Guest(String firstName, String lastName, String address, String phonenumber, int guestID)
    {
        this.lastName = lastName;
@@ -16,65 +21,56 @@ public class Guest {
        this.guestID = guestID;
    }
 
-       public Guest() {}
- 
-   //Getters and setters
-   public String getFirstName()
-   {
+   //Getters and Setters
+   
+   public String getFirstName()  {
        return firstName;
    }
-   public void setFirstName(String firstName)
-   {
+   
+   public void setFirstName(String firstName)   {
        this.firstName = firstName;
    }
 
-   public String getLastName()
-   {
+   public String getLastName()   {
        return lastName;
    }
 
-   public void setLastName(String lastName)
-   {
+   public void setLastName(String lastName)  {
        this.lastName = lastName;
    }
 
-   public  String getAddress()
-   {
+   public  String getAddress()   {
        return address;
    }
 
-   public void setAddress(String address)
-   {
+   public void setAddress(String address) {
        this.address = address;
    }
 
-   public String getPhoneNumber()
-   {
+   public String getPhoneNumber()   {
        return phonenumber;
    }
 
-   public void setPhoneNumber(String phonenumber)
-   {
+   public void setPhoneNumber(String phonenumber)  {
        this.phonenumber = phonenumber;
    }
    
-   public int getGuestID ()
-   {
+   public int getGuestID ()   {
        return guestID;
    }
-   public void setGuestID (int guestID)
-   {
+   
+   public void setGuestID (int guestID)   {
        this. guestID = guestID;
    }
    
-   //To String
-   public String toString()
-   {
+   //Printers
+   
+   public String toString()   {     //Only used when we print to file
       return firstName + "     " + lastName + "     " + address + "     " + phonenumber + 
       "     " + guestID;
    }  
    
-   public void displayAlligenedGuest() {
+   public void displayAlligned() {     //Only used when we print to console
       System.out.printf("%-15s%-15s%-15s%-15s%-15d%n",firstName,
                         lastName,address,phonenumber,guestID);
    }

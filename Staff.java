@@ -1,5 +1,7 @@
 public class Staff {
-   //attributes
+   
+   //Attributes
+   
    private int id;
    private String firstName;
    private String lastName;
@@ -11,7 +13,8 @@ public class Staff {
    private int salary;
    
    
-   //constructors
+   //Constructors
+   
    public Staff() {}
    
    public Staff(int id, String firstName, String lastName, String job, String address, String phoneNumber, String cpr, int hours, int salary) {
@@ -26,8 +29,8 @@ public class Staff {
       this.salary = salary;    
    }
    
+   //Getters and Setters
    
-   //setters
    public void setId(int id)  {
       this.id = id;
    }
@@ -64,8 +67,6 @@ public class Staff {
       this.salary = salary;
    }
    
-   
-   //getters
    public int getId()   {
       return id;
    }
@@ -103,14 +104,14 @@ public class Staff {
    }
    
    
-   //methods
+   //Printers
    
-   public String toString() {
+   public String toString() {    //Only used when we print to file
       return id + "     " + firstName + "     " + lastName + "     " + job + "     " + address + "     " 
       + phoneNumber + "     " + cpr + "     " + hours + "     " + salary;
    }
    
-   public void displayAlligned() {
+   public void displayAlligned() {     //Only used when we print to console
       System.out.printf("%-5d%-21s%-21s%-20s%-20s%-15s%-12s%-16d%-15d%n",id,firstName,
                         lastName,job,address,phoneNumber,cpr,hours,salary);
    }

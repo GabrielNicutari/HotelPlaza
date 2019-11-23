@@ -1,5 +1,5 @@
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;        //Yeah, we even needed these 2 here - back and forth formatting of the Dates
 import java.util.*;
    //When we create a booking, we choose the dates and the program will display the rooms available 
    //based on the roomID parameter from this class (which will be stored with the help of the room class
@@ -11,63 +11,62 @@ public class Booking {
    private Date startDate;
    private Date endDate;
    
-    public Booking(int guestID, int roomID, Date startDate, Date endDate)
-   {
+   
+   //Constructors
+   
+   public Booking() {}
+   
+   public Booking(int guestID, int roomID, Date startDate, Date endDate)   {
        this.startDate = startDate;
        this.endDate = endDate;
        this.guestID = guestID;
        this.roomID = roomID;
    }
 
-   public Booking() {}
+   //Getters and Setters
    
-   //Getters and setters
-   public Date getStartDate()
-   {
+   public Date getStartDate() {
        return startDate;
    }
-   public void setStartDate(Date startDate)
-   {
+   
+   public void setStartDate(Date startDate)  {
        this.startDate = startDate;
    }
    
-   public Date getEndDate()
-   {
+   public Date getEndDate()   {
       return endDate;
    }
-   public void setEndDate(Date endDate)
-   {
+   
+   public void setEndDate(Date endDate)   {
        this.endDate = endDate;
    }
    
-      public int getGuestID ()
-   {
-       return guestID;
+   public int getGuestID()   {
+      return guestID;
    }
-   public void setGuestID (int guestID)
-   {
+   
+   public void setGuestID(int guestID)   {
        this.guestID = guestID;
    }
    
-     public int getRoomID ()
-   {
+   public int getRoomID() {
        return roomID;
    }
-   public void setRoomID (int roomID)
-   {
+   
+   public void setRoomID(int roomID)  {
        this.roomID = roomID;
    }
    
-   //To String
-   public String toString()
-   {
+   //Printers
+   
+   public String toString()   {     //Only used when we print to file
       SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
       String start = formatter.format(startDate);
       String end = formatter.format(endDate);
       return guestID + "     " + roomID + "     " + start + "     " + end;
    } 
    
-   public void displayAlligned() {
+   public void displayAlligned() {     //Only used when we print to console
       SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
       String start = formatter.format(startDate);
       String end = formatter.format(endDate);
