@@ -547,11 +547,10 @@ public class Menu {
          
          System.out.println("Choose an option: ");
          System.out.println("[1] Update");
-         //System.out.println("[2] Delete");
-         System.out.println("[3] Go Back");
+         System.out.println("[2] Go Back");
          System.out.println("============================");
          
-         choice = validateInput(choice,3);
+         choice = validateInput(choice,2);
          
          switch(choice) {
             case 1:
@@ -563,19 +562,13 @@ public class Menu {
                break;
                
             case 2:
-            
-               //repo.deleteGuest();
-               printEmptyLines();
-               break;
-               
-            case 3:
                break;
                
             default:
                printEmptyLines();
-               System.out.println("Choice must be a value between \"1\" and \"3\".");
+               System.out.println("Choice must be a value between \"1\" and \"2\".");
          }
-      }while(choice != 3 && !updated);
+      }while(choice != 2 && !updated);
    }
    
    //Update

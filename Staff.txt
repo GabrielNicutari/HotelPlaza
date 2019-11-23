@@ -1,3 +1,1 @@
-1     Faisal     Fawzi     Teacher     adsf     2342     234     20     233     
-
-2     Morten     Pedersen     Student     sdgasdg     35235     1245125     35     5000
+1     Faisal     Jarkass     Teacher     adsf     2342     12351326     20     233     

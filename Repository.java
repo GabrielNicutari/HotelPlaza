@@ -226,7 +226,7 @@ public class Repository {
       
       String newLine = staffList.get(remember).toString();
       
-      modifyFile(oldLine,newLine,"Staff.txt");
+      modifyFile(oldLine,newLine,"Staff.txt",staffList);
    }
    
    //Delete
@@ -247,7 +247,7 @@ public class Repository {
       String answer = isYesOrNo();
       
       if(answer.equalsIgnoreCase("YES") || answer.equalsIgnoreCase("Y"))   {
-         deleteFromFile(staffList.get(remember).toString(),"Staff.txt");   //Delete from file                  
+         deleteFromFile(staffList.get(remember).toString(),"Staff.txt",staffList);   //Delete from file                  
          staffList.remove(remember);   //Delete from array  
          System.out.println("The staff member has been deleted");
          
@@ -443,8 +443,16 @@ public class Repository {
             
          case "internet":
             
-            System.out.println("Type whether you want the room to have <Internet Connection> or not");
-            roomList.get(remember).setInternet(Boolean.valueOf(br.readLine()));
+            System.out.println("Type whether you want the room to have <Internet Connection> or not (Type \"Y/YES\" or \"N/NO\")");
+            
+            String answer = isYesOrNo();
+            
+            if(answer.equalsIgnoreCase("YES") || answer.equalsIgnoreCase("Y")) {
+               roomList.get(remember).setInternet(true);
+            }  else  {
+               roomList.get(remember).setInternet(false);
+            }
+           
             break;
             
          case "price":
@@ -472,7 +480,7 @@ public class Repository {
       
       String newLine = roomList.get(remember).toString();
       
-      modifyFile(oldLine,newLine,"Room.txt");   
+      modifyFile(oldLine,newLine,"Room.txt",roomList);   
    }
    
    //Choose Which Room To Update
@@ -643,7 +651,7 @@ public class Repository {
       
       String newLine = guestList.get(remember).toString();
       
-      modifyFile(oldLine,newLine,"Guest.txt");
+      modifyFile(oldLine,newLine,"Guest.txt",guestList);
    }
    
    //Choose Who To Update
@@ -770,13 +778,20 @@ public class Repository {
    
    //Modify (in)
    
-   public void modifyFile(String oldLine, String newLine, String fileName) throws IOException   {
+   public void modifyFile(String oldLine, String newLine, String fileName, ArrayList <?> arr) throws IOException   {
       String line = "";
       String oldText = "";
       BufferedReader input = new BufferedReader(new FileReader(fileName));
       
+      int lineNr = 0;
       while((line = input.readLine())!= null)  {
-         oldText += line + "\r\n";
+         lineNr++;
+         
+         if(lineNr != arr.size()) {
+            oldText += line + "\r\n";
+         }  else {
+            oldText += line;
+         }
       }
       
       input.close();
@@ -790,7 +805,7 @@ public class Repository {
    
    //Delete (from)
    
-   public void deleteFromFile(String lineToDelete, String fileName)  throws FileNotFoundException, IOException{
+   public void deleteFromFile(String lineToDelete, String fileName, ArrayList <?> arr)  throws FileNotFoundException, IOException{
       File inputFile = new File(fileName);
       File tempFile = new File("myTempFile.txt");
    
@@ -804,8 +819,7 @@ public class Repository {
          line++;
          if(trimmedLine.equals(lineToDelete))   
             continue;
-         
-         if(line != staffList.size()) {
+         if(line != arr.size() - 1) {         
             output.write(currentLine + System.getProperty("line.separator"));
          }  else {
             output.write(currentLine);
