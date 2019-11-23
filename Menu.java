@@ -174,7 +174,6 @@ public class Menu {
                break;
                
             case 3:
-               //repeat = true;
                break;
                
             default:
@@ -187,7 +186,7 @@ public class Menu {
    //Update
    
    public void updateStaff()  throws IOException   {      
-      System.out.println("Type the ID of the staff member you want to modify ");
+      System.out.println("Type the <ID> of the staff member you want to modify ");
       int toUpdate = console.nextInt();
       
       int choice = -1;
@@ -530,18 +529,25 @@ public class Menu {
    
    //Search
    
-   public void searchGuest() {
+   public void searchGuest() throws IOException{
       int choice = -1;
+      boolean repeat = true;
+      boolean updated = false;
+      
       do {
          System.out.println("SEARCH GUEST MENU");
          System.out.println("****************************");
-         System.out.println("Type the first name or the CPR (ddmmyy-xxxx) of the guest.");
          
-         //repo.searchGuest();
+         
+         if(repeat)  {
+            System.out.println("Type the <First Name> or the <Phone Number> of the guest.");
+            repo.searchGuest();
+         }
+         
          
          System.out.println("Choose an option: ");
          System.out.println("[1] Update");
-         System.out.println("[2] Delete");
+         //System.out.println("[2] Delete");
          System.out.println("[3] Go Back");
          System.out.println("============================");
          
@@ -549,15 +555,15 @@ public class Menu {
          
          switch(choice) {
             case 1:
-            
-               printEmptyLines();
-               //updateGuest();  //Another menu
+           
+               updateGuest();  //Another menu
+               repeat = false;
+               updated = true;
                printEmptyLines();
                break;
                
             case 2:
             
-               printEmptyLines();
                //repo.deleteGuest();
                printEmptyLines();
                break;
@@ -569,8 +575,73 @@ public class Menu {
                printEmptyLines();
                System.out.println("Choice must be a value between \"1\" and \"3\".");
          }
-      }while(choice != 3);
+      }while(choice != 3 && !updated);
    }
+   
+   //Update
+   
+   public void updateGuest()  throws IOException   {      
+      System.out.println("Type the <ID> of the Guest you want to modify ");
+      int toUpdate = console.nextInt();
+      
+      int choice = -1;
+      do {
+          System.out.println();
+          System.out.println("Choose what to modify: ");
+          System.out.println("[1] First Name ");
+          System.out.println("[2] Last Name");
+          System.out.println("[3] Address");
+          System.out.println("[4] Phone Number");
+          System.out.println("[5] Everything");
+          System.out.println("[6] Go back");
+               
+          choice = validateInput(choice,6);
+          switch(choice) {
+            case 1:
+            
+               printEmptyLines();
+               repo.updateGuest(toUpdate,"firstName");
+               printEmptyLines();
+               break;
+               
+            case 2:
+            
+               printEmptyLines();
+               repo.updateGuest(toUpdate,"lastName");
+               printEmptyLines();
+               break;
+               
+            case 3:
+            
+               printEmptyLines();
+               repo.updateGuest(toUpdate,"address");
+               printEmptyLines();
+               break;
+               
+            case 4:
+            
+               printEmptyLines();
+               repo.updateGuest(toUpdate,"phoneNumber");
+               printEmptyLines();
+               break;
+               
+            case 5:
+            
+               printEmptyLines();
+               repo.updateGuest(toUpdate,"everything");
+               printEmptyLines();
+               break;
+               
+            case 6:
+               break;
+               
+            default:
+               printEmptyLines();
+               System.out.println("Choice must be a value between \"1\" and \"6\".");
+          }
+      }  while(choice != 6);
+   }
+   
    
             //BOOKING MENUS\\
             

@@ -47,28 +47,28 @@ public class Repository {
       
       System.out.println("In order to create a new staff member, please enter the following:");
       
-      System.out.println("First Name: ");
+      System.out.println("First Name:");
       staff.setFirstName(console.nextLine());
       
-      System.out.println("Last Name: ");
+      System.out.println("Last Name:");
       staff.setLastName(console.nextLine());
       
-      System.out.println("Job: ");
+      System.out.println("Job:");
       staff.setJob(console.nextLine());
       
-      System.out.println("Address: ");
+      System.out.println("Address:");
       staff.setAddress(console.nextLine());
       
-      System.out.println("Phone number: ");
+      System.out.println("Phone number:");
       staff.setPhoneNumber(console.nextLine());
       
-      System.out.println("CPR: ");
+      System.out.println("CPR:");
       staff.setCpr(console.nextLine());
       
-      System.out.println("Working Hours: ");
+      System.out.println("Working Hours:");
       staff.setHours(validateInput());
       
-      System.out.println("Monthly Salary: ");
+      System.out.println("Monthly Salary:");
       staff.setSalary(validateInput());
       
       staff.setId(maxID + 1);
@@ -298,7 +298,7 @@ public class Repository {
             System.out.println("Choose the amount of beds");
             int beds = console.nextInt();
             
-            roomHeadline();
+            roomHeadLine();
             
             for(int i = 0; i < roomList.size(); i++)   {
                if(beds == roomList.get(i).getNumOfBeds())   {
@@ -315,7 +315,7 @@ public class Repository {
             
             if(answer.equalsIgnoreCase("YES") || answer.equalsIgnoreCase("Y"))   {
                
-               roomHeadline();
+               roomHeadLine();
                
                for(int i = 0; i < roomList.size(); i++)   {
                   if(roomList.get(i).getInternet())   {     
@@ -324,7 +324,7 @@ public class Repository {
                }
             }  else {      //It's gonna be a "NO/N" anyway, because of the isYesOrNO() method
                
-               roomHeadline();
+               roomHeadLine();
                
                for(int i = 0; i < roomList.size(); i++)   {
                   if(!roomList.get(i).getInternet())   {    
@@ -340,7 +340,7 @@ public class Repository {
             System.out.println("Choose the floor number");
             int floor = console.nextInt();
             
-            roomHeadline();
+            roomHeadLine();
             
             for(int i = 0; i < roomList.size(); i++)   {
                if(floor == roomList.get(i).getFloor())   {
@@ -355,7 +355,7 @@ public class Repository {
             
             int price = console.nextInt();
             
-            roomHeadline();
+            roomHeadLine();
             
             for(int i = 0; i < roomList.size(); i++)   {
                if(price == roomList.get(i).getPrice())   {
@@ -378,7 +378,7 @@ public class Repository {
    
    //Prints the headline of room attributes
    
-   public void roomHeadline()   {
+   public void roomHeadLine()   {
       System.out.println();
             
       System.out.printf("%-15s%-15s%-15s%-15s%-15s%n","RoomID",
@@ -499,7 +499,7 @@ public class Repository {
       
       while((line = input.readLine()) != null)  {
          String[] split = line.split("     ");
-         guestList.add(new Guest(split[0],split[1],split[2],split[3],Integer.valueOf(split[4])));
+         guestList.add(new Guest(Integer.valueOf(split[0]),split[1],split[2],split[3],split[4]));
          maxID++;
       }
       input.close();
@@ -509,10 +509,10 @@ public class Repository {
    //Display
    
    public void displayGuest() throws IOException {
-      System.out.println("Guest overveiw");
+      System.out.println("Guest overview");
       
-      System.out.printf("%-15s%-15s%-15s%-15s%-15s%n","First Name",
-                        "Last Name","Adress","Phone number","Guest ID");
+      System.out.printf("%-5s%-15s%-15s%-15s%-15s%n","ID","First Name",
+                        "Last Name","Adress","Phone number");
       System.out.println("------------------------------------------------------------------------------------------------------------------------------");
       
       for (int i=0; i < guestList.size(); i++) {
@@ -527,19 +527,20 @@ public class Repository {
       Guest guest = new Guest();
       
       System.out.println("In order to create a new booking, please enter the following:");
+      
       System.out.println("First Name:");
       guest.setFirstName(console.nextLine());
          
-      System.out.println("Last Name: ");
+      System.out.println("Last Name:");
       guest.setLastName(console.nextLine());
                
-      System.out.println("Address: ");
+      System.out.println("Address:");
       guest.setAddress(console.nextLine());
          
-      System.out.println("Phone number: ");
+      System.out.println("Phone number:");
       guest.setPhoneNumber(console.nextLine());
       
-      guest.setGuestID(maxID + 1);
+      guest.setID(maxID + 1);
       maxID++; //Increments the ID whenever a guest is created.
          
       guestList.add(guest);  
@@ -552,6 +553,111 @@ public class Repository {
       
       return maxID;
    }
+   
+   //Search
+   
+   public void searchGuest()  throws IOException {
+      String input = br.readLine();
+      
+      System.out.println();
+                        
+      boolean ok_object = false, ok_headline = false;
+      
+      for(Guest g : guestList) {
+      
+         if (g.getFirstName().toLowerCase().contains(input.toLowerCase()) ||
+            g.getPhoneNumber().toLowerCase().equals(input.toLowerCase()))  {
+            
+            ok_object = true;
+            
+            if(!ok_headline)  {
+               System.out.printf("%-5s%-15s%-15s%-15s%-15s%n","ID","First Name",
+                        "Last Name","Address","Phone number");
+               System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
+               ok_headline = true;
+            }
+            
+            g.displayAlligned();
+         }
+      }
+      
+      System.out.println();
+      
+      if(!ok_object)  {
+         System.out.println("The guest hasn't been found.");
+         System.out.println();
+      }
+   }
+   
+   //Update
+   
+   public void updateGuest(int toUpdate, String task)  throws IOException  {
+      int remember = chooseGuest(toUpdate);
+
+      String oldLine = guestList.get(remember).toString();
+      
+      switch(task)   {
+         case "firstName":
+         
+            System.out.println("Type the new <First Name> of the guest");
+            guestList.get(remember).setFirstName(br.readLine());
+            break;
+            
+         case "lastName":
+         
+            System.out.println("Type the new <Last Name> of the guest");
+            guestList.get(remember).setLastName(br.readLine());
+            break;
+            
+         case "address":
+         
+            System.out.println("Type the new <Address> of the guest");
+            guestList.get(remember).setAddress(br.readLine());
+            break;
+            
+         case "phoneNumber":
+         
+            System.out.println("Type the new <Phone Number> of the guest");
+            guestList.get(remember).setPhoneNumber(br.readLine());
+            break;
+                        
+         case "everything":
+           
+            System.out.println("Type the new <First Name> of the guest");
+            guestList.get(remember).setFirstName(br.readLine());
+            
+            System.out.println("Type the new <Last Name> of the guest");
+            guestList.get(remember).setLastName(br.readLine());
+            
+            System.out.println("Type the new <Address> of the guest");
+            guestList.get(remember).setAddress(br.readLine());
+            
+            System.out.println("Type the new <Phone Number> of the guest");
+            guestList.get(remember).setPhoneNumber(br.readLine());
+            
+            break;
+            
+         default:
+            System.out.println("Wrong task");
+      }
+      
+      String newLine = guestList.get(remember).toString();
+      
+      modifyFile(oldLine,newLine,"Guest.txt");
+   }
+   
+   //Choose Who To Update
+   
+   public int chooseGuest(int toUpdate)  {
+      int i;
+      for(i = 0 ; i < guestList.size(); i++)   {
+         if(guestList.get(i).getID() == toUpdate) {
+            return i;
+         }
+      }
+      return -1;
+   }
+   
    
    
    

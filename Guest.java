@@ -2,23 +2,23 @@ public class Guest {
   
    //Atrributes
    
+   private int ID;
    private String firstName;
    private String lastName;
    private String address;
-   private String phonenumber;
-   private int guestID;
-   
+   private String phoneNumber;
+
    //Constructors
    
    public Guest() {}
    
-   public Guest(String firstName, String lastName, String address, String phonenumber, int guestID)
+   public Guest(int ID, String firstName, String lastName, String address, String phoneNumber)
    {
+       this.ID = ID;
        this.lastName = lastName;
        this.firstName = firstName;
        this.address = address;
-       this.phonenumber = phonenumber;
-       this.guestID = guestID;
+       this.phoneNumber = phoneNumber;
    }
 
    //Getters and Setters
@@ -48,30 +48,29 @@ public class Guest {
    }
 
    public String getPhoneNumber()   {
-       return phonenumber;
+       return phoneNumber;
    }
 
-   public void setPhoneNumber(String phonenumber)  {
-       this.phonenumber = phonenumber;
+   public void setPhoneNumber(String phoneNumber)  {
+       this.phoneNumber = phoneNumber;
    }
    
-   public int getGuestID ()   {
-       return guestID;
+   public int getID ()   {
+       return ID;
    }
    
-   public void setGuestID (int guestID)   {
-       this. guestID = guestID;
+   public void setID (int ID)   {
+       this.ID = ID;
    }
    
    //Printers
    
    public String toString()   {     //Only used when we print to file
-      return firstName + "     " + lastName + "     " + address + "     " + phonenumber + 
-      "     " + guestID;
+      return ID + "     " + firstName + "     " + lastName + "     " + address + "     " + phoneNumber;
    }  
    
    public void displayAlligned() {     //Only used when we print to console
-      System.out.printf("%-15s%-15s%-15s%-15s%-15d%n",firstName,
-                        lastName,address,phonenumber,guestID);
+      System.out.printf("%-5d%-15s%-15s%-15s%-15s%n",ID,firstName,
+                        lastName,address,phoneNumber);
    }
 }
