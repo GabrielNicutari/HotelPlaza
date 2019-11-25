@@ -727,7 +727,7 @@ public class Menu {
    
    //Search
    
-   public void searchBooking()   throws IOException, InterruptedException  {
+   public void searchBooking()   throws IOException, InterruptedException, ParseException  {
       String choice = "-1";
       boolean repeat = true;
       boolean updated = false;
@@ -747,8 +747,9 @@ public class Menu {
             continue;
          } 
          
+         System.out.println();
          System.out.println("Choose an option: ");
-         System.out.println("[1] Renew");    //Delete and Create a new one
+         System.out.println("[1] Renew Booking");    //Delete and Create a new one
          System.out.println("[2] Delete");
          System.out.println("[3] Go Back");
          System.out.println("============================");
@@ -758,7 +759,10 @@ public class Menu {
          switch(choice) {
             case "1":
                
-               //renewBooking();
+               repo.renewBooking();
+               maxID = repo.createGuest(maxID);
+               repo.setBookingGuestID();
+               doesStop();
                repeat = false;
                updated = true;
                printEmptyLines();
@@ -766,7 +770,7 @@ public class Menu {
                
             case "2":
             
-               //repeat = repo.deleteBooking();   //also guest
+               repeat = repo.deleteBooking();   //also guest
                updated = true;
                printEmptyLines();
                break;
@@ -780,8 +784,10 @@ public class Menu {
                printEmptyLines();
                Thread.sleep(1000);
          }
-      }while(!choice.equals("3"));
+      }while(!choice.equals("3") && !updated);
    }
+   
+   //Update
    
    public void updateBooking()  throws IOException, InterruptedException   {      
       System.out.println("Type the <ID> of the staff member you want to modify ");

@@ -2,8 +2,15 @@ import java.util.*;
 import java.io.*;
 import java.text.*;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.*;
+import java.time.*;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Repository {
+
+   //Current time
+   LocalDateTime localDateTime = LocalDateTime.now();
    
    //Console inputs
    
@@ -23,6 +30,10 @@ public class Repository {
    ArrayList<Booking> bookingList_temp = new ArrayList<>();
    ArrayList<Booking> bookingList_tempCreate = new ArrayList<>();
    ArrayList<Room> roomList_tempCreate = new ArrayList<>();
+   
+   //Patterns
+   String decimalPattern = "\\d+";     //One or more digits
+   String datePattern = "([0-9]{1,2})-([0-9]{1,2})-([0-9]{2}) [0-9]{2}:[0-9]{2}";
             
             //STAFF FUNCTIONALITY\\
    
@@ -243,7 +254,7 @@ public class Repository {
    
    //Delete
    
-   public boolean deleteStaff()  throws FileNotFoundException, IOException {
+   public boolean deleteStaff()  throws FileNotFoundException, IOException, InterruptedException {
       System.out.println("Type the ID of the staff member you want to delete ");
       
       int toDelete = whereInsideStaffTempArray();
@@ -252,7 +263,7 @@ public class Repository {
       String firstName = staffList.get(remember).getFirstName();
       String lastName = staffList.get(remember).getLastName();
       
-      
+      System.out.println();
       System.out.println("Are you sure you want to delete the staff member <" + firstName + " " + lastName + 
                         ">? (Type \"Y/YES\" or \"N/NO\")");
       
@@ -262,6 +273,7 @@ public class Repository {
          deleteFromFile(staffList.get(remember).toString(),"Staff.txt",staffList);   //Delete from file                  
          staffList.remove(remember);   //Delete from array  
          System.out.println("The staff member has been deleted");
+         Thread.sleep(1000);
          
          return false;
       }  else  {
@@ -727,14 +739,16 @@ public class Repository {
       System.out.println("In order to create a new booking, please enter the following:");
       
       do {
-         
-         System.out.println("StartDate:");
-   
-         Date startDate = new SimpleDateFormat("dd-MM-yy hh:mm").parse(console.nextLine());
+      
+         System.out.println("StartDate: (Type \"dd-mm-yy hh:mm\")");
+
+         Date startDate = new SimpleDateFormat("dd-MM-yy hh:mm").parse(validateDateFormat());
+         Date current = Date.from( localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+         startDate = validateCurrentTime(startDate, current);
          booking.setStartDate(startDate);
-   
-         System.out.println("EndDate:");
-         Date endDate = new SimpleDateFormat("dd-MM-yy hh:mm").parse(console.nextLine());
+
+         System.out.println("EndDate: (Type \"dd-mm-yy hh:mm\")");
+         Date endDate = new SimpleDateFormat("dd-MM-yy hh:mm").parse(validateDateFormat());
    
          endDate = validateDate(startDate, endDate);
    
@@ -785,37 +799,39 @@ public class Repository {
          }
       
       //Search by roomNumber
-      
-      if(!ok_object)  {
-         for(int i = 0; i < bookingList.size(); i++) {
-      
-            if (bookingList.get(i).getRoomID() == Integer.valueOf(input))  {       //checkRoomNumber
-               
-               ok_object = true;
-               
-               if(!ok_headline)  {
-                  System.out.printf("%-5s%-15s%-15s%-15s%-15s%-10s%n","ID","Room Number",
-                           "Start Date","End Date","First Name","Phone number");
-                  System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
-                  ok_headline = true;
+      boolean match = Pattern.matches(decimalPattern,input);
+      if(match)   {
+         if(!ok_object)  {
+            for(int i = 0; i < bookingList.size(); i++) {
+         
+               if (bookingList.get(i).getRoomID() == Integer.valueOf(input))  {       //checkRoomNumber
+                  
+                  ok_object = true;
+                  
+                  if(!ok_headline)  {
+                     System.out.printf("%-5s%-15s%-15s%-15s%-15s%-10s%n","ID","Room Number",
+                              "Start Date","End Date","First Name","Phone number");
+                     System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
+                     ok_headline = true;
+                  }
+                                             
+                  bookingList_temp.add(bookingList.get(i));        //Every found object is stored in a temporary ArrayList
+                  bookingList.get(i).displayAlligned();
+                  guestList.get(i).displayNameAndPhoneNumber();
                }
-                                          
-               bookingList_temp.add(bookingList.get(i));        //Every found object is stored in a temporary ArrayList
-               bookingList.get(i).displayAlligned();
-               guestList.get(i).displayNameAndPhoneNumber();
-            }
+            }   
          }   
-      }
-          
-      System.out.println();
+      }  
       
-      if(!ok_object)  {
+      if(!ok_object) {
          System.out.println("The booking hasn't been found");
          Thread.sleep(1000);
          return false;
-      }
+      }  
       return true;
    } 
+   
+   //Set The Booking ID 
    
    public void setBookingGuestID() throws IOException{
       bookingList.get(bookingList.size()-1).setGuestID(guestList.get(guestList.size()-1).getID());
@@ -824,6 +840,86 @@ public class Repository {
       output.newLine();
       output.write(bookingList.get(bookingList.size() - 1).toString());
       output.close(); 
+   }
+   
+   //Update
+   
+   public void updateBooking(int toUpdate, String task)  throws IOException  {
+      
+      int remember = chooseBooking(toUpdate);
+      
+      String oldLine = bookingList.get(remember).toString();
+      
+      switch(task)   {
+         case "startDate":
+            
+            break;
+            
+         case "endDate":
+                      
+            break;
+            
+         case "everything":
+            
+            break;
+            
+         default:
+            System.out.println("Wrong task");
+      }
+      
+      String newLine = roomList.get(remember).toString();
+      
+      modifyFile(oldLine,newLine,"Room.txt",roomList);   
+   }
+   
+   //Renew Booking
+   
+   public void renewBooking() throws IOException, ParseException, InterruptedException {
+      deleteBooking();
+      createBooking();
+   }
+   
+   //Delete Booking
+   
+   public boolean deleteBooking()  throws FileNotFoundException, IOException, InterruptedException {
+      System.out.println("Type the ID of the staff member you want to delete ");
+      
+      int toDelete = whereInsideBookingTempArray();
+      int remember = chooseBooking(toDelete);  
+      
+      String firstName = guestList.get(remember).getFirstName();
+      String lastName = guestList.get(remember).getLastName();
+      
+      System.out.println();
+      System.out.println("Are you sure you want to delete <" + firstName + " " + lastName + 
+                        ">'s booking? (Type \"Y/YES\" or \"N/NO\")");
+      
+      String answer = isYesOrNo();
+      
+      if(answer.equalsIgnoreCase("YES") || answer.equalsIgnoreCase("Y"))   {
+         deleteFromFile(bookingList.get(remember).toString(),"Booking.txt",bookingList);   //Delete from file                  
+         deleteFromFile(guestList.get(remember).toString(),"Guest.txt",guestList);
+         bookingList.remove(remember);   //Delete from array  
+         guestList.remove(remember);
+         System.out.println("The booking has been deleted");
+         Thread.sleep(1000);
+         
+         return false;
+      }  else  {
+         return true;
+      }
+   }
+   
+   //Choose What To Update/Delete
+   
+   public int chooseBooking(int toUpdate)  {
+      int i;
+      for(i = 0 ; i < bookingList.size(); i++)   {
+         if(bookingList.get(i).getGuestID() == toUpdate) {
+            return i;
+         }
+      }
+      return -1;
    }
 
                //VALIDATIONS\\
@@ -907,9 +1003,23 @@ public class Repository {
       
       while(endDate.before(startDate))  {
          System.out.println("Wrong input, the EndDate has to be after the StartDate.");
-         endDate = new SimpleDateFormat("dd-MM-yy hh:mm").parse(console.next());
+         endDate = new SimpleDateFormat("dd-MM-yy hh:mm").parse(console.nextLine());
       }
       return endDate;
+   }
+   
+   //Date Format
+   
+   public String validateDateFormat()  {
+      String date = console.nextLine();
+      boolean match = Pattern.matches(datePattern,date);
+      while(!match)  {
+         System.out.println("Wrong Format. (Type \"dd-mm-yy hh:mm\").");
+         date = console.nextLine();
+         match = Pattern.matches(datePattern,date);
+      }
+      //date = console.nextLine();
+      return date;
    }
    
    //Yes / No
@@ -1002,6 +1112,16 @@ public class Repository {
          }
       }
       return false;
+   }
+   
+   //Current time
+   
+   public Date validateCurrentTime(Date startDate, Date current) throws ParseException  {
+      while (startDate.before(current)) {
+            System.out.println("The start date has to be after the current time");
+            startDate = new SimpleDateFormat("dd-MM-yy hh:mm").parse(validateDateFormat());
+      } 
+      return startDate;
    }
    
             //FILES UPDATE\\
