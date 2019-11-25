@@ -7,6 +7,7 @@ public class HotelPlaza {
 
    public static void main(String[] args) throws IOException, ParseException, InterruptedException {
       Menu menu = new Menu();
+      menu.logIn();
       menu.displayForAdministrator();
    }
 }

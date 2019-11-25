@@ -11,6 +11,7 @@ public class Repository {
 
    //Current time
    LocalDateTime localDateTime = LocalDateTime.now();
+   Date current = Date.from( localDateTime.atZone(ZoneId.systemDefault()).toInstant());
    
    //Console inputs
    
@@ -34,6 +35,7 @@ public class Repository {
    //Patterns
    String decimalPattern = "\\d+";     //One or more digits
    String datePattern = "([0-9]{1,2})-([0-9]{1,2})-([0-9]{2}) [0-9]{2}:[0-9]{2}";
+   String CPR_Pattern = "\\d{6}-\\d{4}";
             
             //STAFF FUNCTIONALITY\\
    
@@ -80,7 +82,7 @@ public class Repository {
       staff.setPhoneNumber(console.nextLine());
       
       System.out.println("CPR:");
-      staff.setCpr(console.nextLine());
+      staff.setCpr(validateCPR());
       
       System.out.println("Working Hours:");
       staff.setHours(validateInput());
@@ -95,7 +97,9 @@ public class Repository {
             
       BufferedWriter output = new BufferedWriter(new FileWriter("Staff.txt", true));   //Append
       
-      output.newLine();
+      if(staffList.size() != 0) {
+         output.newLine();
+      }
       output.write(staffList.get(staffList.size() - 1).toString());
       output.close();
       
@@ -200,7 +204,7 @@ public class Repository {
          case "CPR":
          
             System.out.println("Type the new <CPR> of the staff member");
-            staffList.get(remember).setCpr(br.readLine());
+            staffList.get(remember).setCpr(validateCPR());
             break;
             
          case "hours":
@@ -233,7 +237,7 @@ public class Repository {
             staffList.get(remember).setPhoneNumber(br.readLine());
             
             System.out.println("Type the new <CPR> of the staff member");
-            staffList.get(remember).setCpr(br.readLine());
+            staffList.get(remember).setCpr(validateCPR());
             
             System.out.println("Type the new <Hours Per Week> of the staff member");
             staffList.get(remember).setHours(Integer.valueOf(br.readLine()));
@@ -294,6 +298,25 @@ public class Repository {
          }
       }
       return -1;
+   }
+   
+   //Find CPR
+   
+   public int findCPR(String toBeSearched)   {
+      for(int i = 0; i < staffList.size(); i++) {
+         if(staffList.get(i).getCpr().equals(toBeSearched))   {
+            return i;   
+         }
+      }
+      return -1;
+   }
+   
+   public String getStaffFirstName(int i)  {
+      return staffList.get(i).getFirstName();
+   }
+   
+   public String getStaffJob(int i)  {
+      return staffList.get(i).getJob();
    }
      
             //ROOM FUNCTIONALITY\\
@@ -447,7 +470,9 @@ public class Repository {
       
       BufferedWriter output = new BufferedWriter(new FileWriter("Room.txt", true));    //Append
       
-      output.newLine();
+      if(roomList.size() != 0) {
+         output.newLine();
+      }
       output.write(roomList.get(roomList.size() - 1).toString());
       output.close();
       
@@ -580,7 +605,9 @@ public class Repository {
       
       BufferedWriter output = new BufferedWriter(new FileWriter("Guest.txt", true));
          
-      output.newLine();
+      if(guestList.size() != 0) {
+         output.newLine();
+      }
       output.write(guestList.get(guestList.size() - 1).toString());
       output.close(); 
       
@@ -743,7 +770,6 @@ public class Repository {
          System.out.println("StartDate: (Type \"dd-mm-yy hh:mm\")");
 
          Date startDate = new SimpleDateFormat("dd-MM-yy hh:mm").parse(validateDateFormat());
-         Date current = Date.from( localDateTime.atZone(ZoneId.systemDefault()).toInstant());
          startDate = validateCurrentTime(startDate, current);
          booking.setStartDate(startDate);
 
@@ -837,7 +863,9 @@ public class Repository {
       bookingList.get(bookingList.size()-1).setGuestID(guestList.get(guestList.size()-1).getID());
       BufferedWriter output = new BufferedWriter(new FileWriter("Booking.txt", true));
 
-      output.newLine();
+      if(bookingList.size() != 0) {
+         output.newLine();
+      }
       output.write(bookingList.get(bookingList.size() - 1).toString());
       output.close(); 
    }
@@ -921,6 +949,22 @@ public class Repository {
       }
       return -1;
    }
+   
+   //Delete Booking RealTime
+
+   public void deleteRealTime() throws FileNotFoundException, IOException {
+      int i;
+      for(i = 0 ; i < bookingList.size(); i++){
+         localDateTime = LocalDateTime.now();
+         current = Date.from( localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+         if (bookingList.get(i).getStartDate().before(current)) {
+            deleteFromFile(bookingList.get(i).toString(),"Booking.txt",bookingList);
+            deleteFromFile(guestList.get(i).toString(),"Guest.txt",guestList); 
+            bookingList.remove(i);
+            guestList.remove(i);
+         } 
+      }
+   }
 
                //VALIDATIONS\\
                
@@ -971,7 +1015,7 @@ public class Repository {
          }
          System.out.println();
          if(roomList_tempCreate.size() == 0) {
-            System.out.println("There is no availble rooms for the chosen dates.");
+            System.out.println("There is no available room for the chosen dates.");
             System.out.println();
             test = false;
          }
@@ -997,6 +1041,20 @@ public class Repository {
       return choice;
    }
    
+   //CPR
+   
+   public String validateCPR()  throws IOException{
+            
+      String CPR = console.nextLine();
+      boolean match = Pattern.matches(CPR_Pattern,CPR);
+      while(!match) {
+         System.out.println("Wrong format. Try again!  ---> (\"ddmmyy-xxxx\") ");
+         CPR = console.nextLine();
+         match = Pattern.matches(CPR_Pattern,CPR);
+      }
+      return CPR;
+   }
+   
    //Dates
    
    public Date validateDate(Date startDate, Date endDate) throws ParseException {
@@ -1018,7 +1076,6 @@ public class Repository {
          date = console.nextLine();
          match = Pattern.matches(datePattern,date);
       }
-      //date = console.nextLine();
       return date;
    }
    
@@ -1055,7 +1112,6 @@ public class Repository {
    
    public boolean isInStaffTempArray(int input) {    
       for(int i = 0; i < staffList_temp.size(); i++)  {
-         //System.out.println(staffList_temp.get(i).getID() + " " + input + " " + i + " " + staffList_temp.size());
          if(staffList_temp.get(i).getID() == input)   {
             return true;
          }

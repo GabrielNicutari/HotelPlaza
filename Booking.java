@@ -69,7 +69,7 @@ public class Booking {
       SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");
       String start = formatter.format(startDate);
       String end = formatter.format(endDate);
-      System.out.printf("%-5d%-15d%-15s%-15s",guestID,roomID,start,end);
+      System.out.printf("%-5d%-15d%-20s%-20s",guestID,roomID,start,end);
    }     
 }
 

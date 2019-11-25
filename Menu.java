@@ -2,12 +2,19 @@ import java.util.*;
 import java.io.*;
 import java.text.*;
 import java.time.format.DateTimeFormatter;
+import java.time.*;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Menu {
    
    public Menu()  {}
    
    Repository repo = new Repository();    //Repository - The class in charge of the BackEnd
+   
+   //Real Time Delete
+
+   LocalDateTime localDateTime = LocalDateTime.now();
    
    //We use these to have constant IDs, and not based on index
    int maxID = 0;       //guest 
@@ -17,10 +24,10 @@ public class Menu {
    Scanner console = new Scanner(System.in);
    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));  //Used to avoid scanner skip issue
    
-   
-            //MAIN MENU\\
-         
-   public void displayForAdministrator() throws IOException, ParseException, InterruptedException{
+            //LOGIN\\
+            
+   public void logIn()  throws FileNotFoundException, IOException, InterruptedException, ParseException{
+      
       //Check the current maxID for staff and guest at the beginning of the program (based on the files)
       //Also input everything from the files at the same time
       maxID = repo.inputGuest(maxID);
@@ -28,8 +35,62 @@ public class Menu {
       repo.inputRoom();
       repo.inputBooking();
       
+      boolean loggedIn = false;
+      do {
+      
+         System.out.println("Type your CPR (\"ddmmyy-xxxx\")");
+          
+         String CPR = repo.validateCPR();
+   
+         System.out.println();
+         int index = repo.findCPR(CPR);
+         System.out.println();
+         
+         String name, role; 
+         
+         if(index != -1)   {
+            name = repo.getStaffFirstName(index); //s.get(index).getFirstName();
+            role = repo.getStaffJob(index); //s.get(index).getJob();
+            
+            if(role.equalsIgnoreCase("Administrator"))   {     
+               System.out.println("You are logged in as an Administrator. Welcome, " + name + "!");
+               Thread.sleep(3000);
+               printEmptyLines();
+               //user = "Administrator";
+               loggedIn = true;
+            }  // else if(role.equalsIgnoreCase("Administrator"))  {
+   //             System.out.println("You are logged in as an employee (Administrator). Welcome, " + name + "!");
+   //             Thread.sleep(3000);
+   //             printEmptyLines();
+   //             user = "Administrator";
+   //          }  
+         }  else  {
+               System.out.println("Invalid credentials. Please try again!");
+            // index  = foundMember(members,CPR);
+   //             
+   //          if(index > 0)  {
+   //             name = members.get(index).getName();
+   //             System.out.println("You are logged in as a member. Welcome, " + name + "!");
+   //             Thread.sleep(3000);
+   //             printEmptyLines();
+   //             user = "Member";
+   //          }  else  {
+   //             System.out.println("You are logged in as a guest. Welcome!");
+   //             Thread.sleep(3000);
+   //             printEmptyLines();
+   //             user = "Member";
+            }   
+         }  while(!loggedIn); 
+      }  
+   
+            //MAIN MENU\\
+         
+   public void displayForAdministrator() throws IOException, ParseException, InterruptedException{
+      
       String choice = "-1";
       do {
+         repo.deleteRealTime();
+         
          System.out.println("MAIN MENU");
          System.out.println("****************************");
          System.out.println("Choose an option: ");
@@ -676,6 +737,8 @@ public class Menu {
    public void bookingMenu() throws IOException, ParseException, InterruptedException   {
       String choice = "-1";
       do {
+         repo.deleteRealTime();
+         
          System.out.println("BOOKINGS MENU");
          System.out.println("****************************");
          System.out.println("Choose an option: ");
@@ -689,7 +752,8 @@ public class Menu {
          
          switch(choice) {
             case "1":
-            
+               
+               repo.deleteRealTime();
                printEmptyLines();
                repo.displayBooking();
                doesStop();
@@ -698,6 +762,7 @@ public class Menu {
                
             case "2":
             
+               repo.deleteRealTime();
                printEmptyLines();
                repo.createBooking();
                maxID = repo.createGuest(maxID);
@@ -707,7 +772,8 @@ public class Menu {
                break;
                
             case "3":
-            
+               
+               repo.deleteRealTime();
                printEmptyLines();
                searchBooking();
                printEmptyLines();
