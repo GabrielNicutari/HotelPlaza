@@ -700,8 +700,9 @@ public class Menu {
             case "2":
             
                printEmptyLines();
-               maxID = repo.createGuest(maxID);
                repo.createBooking();
+               maxID = repo.createGuest(maxID);
+               repo.setBookingGuestID();
                doesStop();
                printEmptyLines();
                break;
