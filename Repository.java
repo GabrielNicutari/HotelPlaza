@@ -17,6 +17,8 @@ public class Repository {
    ArrayList<Guest> guestList = new ArrayList<>();
    ArrayList<Booking> bookingList = new ArrayList<>();
    
+   //Temporary ArrayLists
+   ArrayList <Staff> staffList_temp = new ArrayList<>();
             
             //STAFF FUNCTIONALITY\\
    
@@ -88,7 +90,9 @@ public class Repository {
    
    //Search  
    
-   public void searchStaff() throws IOException {
+   public boolean searchStaff() throws IOException, InterruptedException {    
+      
+      staffList_temp.clear(); //We reset the temporary ArrayList whenever we search
       
       String input = br.readLine();
       
@@ -98,9 +102,9 @@ public class Repository {
       
       for(Staff s : staffList) {
       
-         if (s.getJob().toLowerCase().contains(input.toLowerCase()) || 
-            s.getFirstName().toLowerCase().contains(input.toLowerCase()) ||
-            s.getCpr().toLowerCase().equals(input.toLowerCase()))  {
+         if (s.getJob().toLowerCase().contains(input.toLowerCase()) ||        //checkJob
+            s.getFirstName().toLowerCase().contains(input.toLowerCase()) ||   //checkFirstName
+            s.getCpr().toLowerCase().equals(input.toLowerCase()))  {          //checkCPR
             
             ok_object = true;
             
@@ -110,17 +114,20 @@ public class Repository {
                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
                ok_headline = true;
             }
-            
+                                       
+            staffList_temp.add(s);        //Every found object is stored in a temporary ArrayList
             s.displayAlligned();
          }
       }
-      
+    
       System.out.println();
       
       if(!ok_object)  {
-         System.out.println("The staff member hasn't been found.");
-         System.out.println();
+         System.out.println("The staff member hasn't been found");
+         Thread.sleep(1000);
+         return false;
       }
+      return true;
    } 
    
    //Display
@@ -220,6 +227,7 @@ public class Repository {
             staffList.get(remember).setSalary(Integer.valueOf(br.readLine()));
             break;
             
+            
          default:
             System.out.println("Wrong task");
       }
@@ -260,10 +268,13 @@ public class Repository {
    //Choose Who To Update/Delete
    
    public int chooseStaff(int toUpdate)  {
-      int i;
-      for(i = 0 ; i < staffList.size(); i++)   {
-         if(staffList.get(i).getID() == toUpdate) {
-            return i;
+      for(int j = 0; j < staffList_temp.size(); j++)   {
+         if(staffList_temp.get(j).getID() == toUpdate) {
+            for(int i = 0; i < staffList.size(); i++) {
+               if(staffList.get(i).getID() == staffList_temp.get(j).getID()) {
+                  return i;      //returns the index in the main ArrayList
+               }
+            }   
          }
       }
       return -1;
@@ -774,6 +785,32 @@ public class Repository {
       return !(input.equalsIgnoreCase("N") || input.equalsIgnoreCase("NO") || input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("YES"));
    }
    
+   //Where is the ID in the staffList_temp?  
+   
+   public int whereInsideStaffTempArray() {
+      int input = validateInput();
+      boolean ok = isInStaffTempArray(input);
+      
+      while(!ok)  {
+        System.out.println("You can only choose between the listed IDs");
+        input = validateInput(); 
+        ok = isInStaffTempArray(input);
+      }
+      return input;
+   }
+   
+   //Is the ID in the staffList_temp?
+   
+   public boolean isInStaffTempArray(int input) {    
+      for(int i = 0; i < staffList_temp.size(); i++)  {
+         //System.out.println(staffList_temp.get(i).getID() + " " + input + " " + i + " " + staffList_temp.size());
+         if(staffList_temp.get(i).getID() == input)   {
+            return true;
+         }
+      }
+      return false;
+   }
+   
             //FILES UPDATE\\
    
    //Modify (in)
@@ -832,5 +869,5 @@ public class Repository {
       boolean successful = tempFile.renameTo(inputFile);
    }
 }
-
+   
 
