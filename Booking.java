@@ -59,17 +59,17 @@ public class Booking {
    //Printers
    
    public String toString()   {     //Only used when we print to file
-      SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");
       String start = formatter.format(startDate);
       String end = formatter.format(endDate);
       return guestID + "     " + roomID + "     " + start + "     " + end;
    } 
    
    public void displayAlligned() {     //Only used when we print to console
-      SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");
       String start = formatter.format(startDate);
       String end = formatter.format(endDate);
-      System.out.printf("%-5d%-15d%-15s%-15s%n",guestID,roomID,start,end);
-   }   
+      System.out.printf("%-5d%-15d%-15s%-15s",guestID,roomID,start,end);
+   }     
 }
 

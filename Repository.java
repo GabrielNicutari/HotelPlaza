@@ -9,7 +9,7 @@ public class Repository {
    
    Scanner console = new Scanner(System.in);
    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));  //Used to avoid scanner skip issue
-   
+   boolean test = true;
    //Arraylists
    
    ArrayList<Staff> staffList = new ArrayList<>();
@@ -20,6 +20,9 @@ public class Repository {
    //Temporary ArrayLists
    ArrayList <Staff> staffList_temp = new ArrayList<>();
    ArrayList<Room> roomList_temp = new ArrayList<>();
+   ArrayList<Booking> bookingList_temp = new ArrayList<>();
+   ArrayList<Booking> bookingList_tempCreate = new ArrayList<>();
+   ArrayList<Room> roomList_tempCreate = new ArrayList<>();
             
             //STAFF FUNCTIONALITY\\
    
@@ -243,7 +246,7 @@ public class Repository {
    public boolean deleteStaff()  throws FileNotFoundException, IOException {
       System.out.println("Type the ID of the staff member you want to delete ");
       
-      int toDelete = console.nextInt();
+      int toDelete = whereInsideStaffTempArray();
       int remember = chooseStaff(toDelete);  
       
       String firstName = staffList.get(remember).getFirstName();
@@ -545,9 +548,7 @@ public class Repository {
    public int createGuest(int maxID) throws IOException{
    
       Guest guest = new Guest();
-      
-      System.out.println("In order to create a new booking, please enter the following:");
-      
+
       System.out.println("First Name:");
       guest.setFirstName(console.nextLine());
          
@@ -689,7 +690,7 @@ public class Repository {
                                           
       BufferedReader input = new BufferedReader(new FileReader("Booking.txt"));
       
-      SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+      SimpleDateFormat format = new SimpleDateFormat("dd-MM-yy hh:mm");
       
       String line ="";
       
@@ -704,12 +705,12 @@ public class Repository {
    
    public void displayBooking() throws IOException {
       
-      System.out.printf("%-5s%-15s%-15s%-15s%n","ID",
-                        "Room Number","Start Date","End Date");
-      System.out.println("------------------------------------------------");
-      
+     System.out.printf("%-5s%-15s%-15s%-15s%-15s%-10s%n","ID","Room Number",
+                        "Start Date","End Date","First Name","Phone number");
+     System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
       for (int i = 0; i < bookingList.size(); i++) {
          bookingList.get(i).displayAlligned();
+         guestList.get(i).displayNameAndPhoneNumber();
       }    
    }
     
@@ -717,52 +718,142 @@ public class Repository {
    
    public void createBooking() throws IOException, ParseException{
 
-      DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+      DateFormat formatter = new SimpleDateFormat("dd-MM-yy hh:mm");
    
       Booking booking = new Booking();
-      boolean test = true;
-   
-      ArrayList<Booking> bookingList_temp = new ArrayList<>();
+      
+      roomList_tempCreate.clear();
    
       System.out.println("In order to create a new booking, please enter the following:");
-   
+      
       do {
-   
+         
          System.out.println("StartDate:");
    
-         Date startDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.nextLine());
+         Date startDate = new SimpleDateFormat("dd-MM-yy hh:mm").parse(console.nextLine());
          booking.setStartDate(startDate);
    
-   
          System.out.println("EndDate:");
-         Date endDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.nextLine());
+         Date endDate = new SimpleDateFormat("dd-MM-yy hh:mm").parse(console.nextLine());
    
          endDate = validateDate(startDate, endDate);
    
          booking.setEndDate(endDate);
-         /*for(int i = 0; i < bookingList.size(); i++) {
-            if (startDate.before(bookingList.get(i).getStartDate()) && startDate.before(bookingList.get(i).getEndDate()))  {
-               bookingList_temp.add(bookingList.get(i));
-            } else {
-               if (endDate.after(bookingList.get(i).getStartDate()) || endDate.before(bookingList.get(i).getEndDate()))  {
-                  bookingList_temp.add(bookingList.get(i));
-               } 
-            }
-         }*/
-         //Checks if the dates are interfering
+         
+         validateDateOverlap(startDate,endDate);
+
+      }  while(roomList_tempCreate.size() == 0);
+
+      System.out.println("Type the RoomID");
+      booking.setRoomID(validateRoomID());
+
+      bookingList.add(booking);
+   }
    
-         for(int i = 0; i < bookingList.size(); i++) {
-            if (startDate.before(bookingList.get(i).getStartDate()) || startDate.after(bookingList.get(i).getEndDate()))  {
-               if (endDate.before(bookingList.get(i).getStartDate()) || endDate.after(bookingList.get(i).getEndDate()))  {
+   //Search
+   
+   public boolean searchBooking() throws IOException, InterruptedException {    
+      
+      bookingList_temp.clear(); //We reset the temporary ArrayList whenever we search
+      
+      String input = br.readLine();
+      
+      System.out.println();
+                        
+      boolean ok_object = false, ok_headline = false;
+      
+      //Search by firstName or phoneNumber
+      
+      for(int i = 0; i < guestList.size(); i++) {
+      
+            if (guestList.get(i).getPhoneNumber().toLowerCase().equals(input.toLowerCase())  ||    //checkPhoneNumber
+                guestList.get(i).getFirstName().toLowerCase().contains(input.toLowerCase()))  {       //checkFirstName
                
-               } else
-                  bookingList_temp.add(bookingList.get(i));
-               } else {
+               ok_object = true;
+               
+               if(!ok_headline)  {
+                  System.out.printf("%-5s%-15s%-15s%-15s%-15s%-10s%n","ID","Room Number",
+                           "Start Date","End Date","First Name","Phone number");
+                  System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
+                  ok_headline = true;
+               }
+                                          
+               bookingList_temp.add(bookingList.get(i));        //Every found object is stored in a temporary ArrayList
+               bookingList.get(i).displayAlligned();
+               guestList.get(i).displayNameAndPhoneNumber();
+            }
+         }
+      
+      //Search by roomNumber
+      
+      if(!ok_object)  {
+         for(int i = 0; i < bookingList.size(); i++) {
+      
+            if (bookingList.get(i).getRoomID() == Integer.valueOf(input))  {       //checkRoomNumber
+               
+               ok_object = true;
+               
+               if(!ok_headline)  {
+                  System.out.printf("%-5s%-15s%-15s%-15s%-15s%-10s%n","ID","Room Number",
+                           "Start Date","End Date","First Name","Phone number");
+                  System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
+                  ok_headline = true;
+               }
+                                          
+               bookingList_temp.add(bookingList.get(i));        //Every found object is stored in a temporary ArrayList
+               bookingList.get(i).displayAlligned();
+               guestList.get(i).displayNameAndPhoneNumber();
+            }
+         }   
+      }
+          
+      System.out.println();
+      
+      if(!ok_object)  {
+         System.out.println("The booking hasn't been found");
+         Thread.sleep(1000);
+         return false;
+      }
+      return true;
+   } 
+   
+   public void setBookingGuestID() throws IOException{
+      bookingList.get(bookingList.size()-1).setGuestID(guestList.get(guestList.size()-1).getID());
+      BufferedWriter output = new BufferedWriter(new FileWriter("Booking.txt", true));
+
+      output.newLine();
+      output.write(bookingList.get(bookingList.size() - 1).toString());
+      output.close(); 
+   }
+
+               //VALIDATIONS\\
+               
+   public void validateDateOverlap(Date startDate, Date endDate)   {
+         // for(int i = 0; i < bookingList.size(); i++) {
+//             if (startDate.before(bookingList.get(i).getStartDate()) || startDate.after(bookingList.get(i).getEndDate()))  {
+//                if (endDate.before(bookingList.get(i).getStartDate()) || endDate.after(bookingList.get(i).getEndDate()))  {
+//                
+//                } else
+//                   bookingList_temp.add(bookingList.get(i));
+//                } else {
+//                   bookingList_temp.add(bookingList.get(i));
+//                }
+//          }
+         for(int i = 0; i < bookingList.size(); i++) {
+            if (startDate.after(bookingList.get(i).getStartDate()) && startDate.before(bookingList.get(i).getEndDate()))  {
+               bookingList_temp.add(bookingList.get(i));
+
+            } else {
+               if (startDate.before(bookingList.get(i).getStartDate()) && endDate.after(bookingList.get(i).getStartDate())) {
                   bookingList_temp.add(bookingList.get(i));
                }
-         }// change
-         for (int j = 0; j < bookingList_temp.size(); j++) 
+            }
+         }
+         
+         for (int j = 0; j < bookingList_temp.size(); j++)  {
             bookingList_temp.get(j).displayAlligned();
+         }
+            
    
          //Stores the availble rooms in a temp array
    
@@ -777,44 +868,26 @@ public class Repository {
             }
             
             if (ok) {
-               roomList_temp.add(roomList.get(j));
+               roomList_tempCreate.add(roomList.get(j));
             }
             ok = true;
             j++;
          }
-         if(roomList_temp.size() == 0) {
+         System.out.println();
+         if(roomList_tempCreate.size() == 0) {
             System.out.println("There is no availble rooms for the chosen dates.");
+            System.out.println();
             test = false;
          }
-   
+         
          //Prints out the availble rooms.
          if (test) {
             roomHeadLine();
          }
-         for (int p = 0; p < roomList_temp.size(); p++) {
-            roomList_temp.get(p).displayAlligned();
+         for (int p = 0; p < roomList_tempCreate.size(); p++) {
+            roomList_tempCreate.get(p).displayAlligned();
          }
-   
-      }  while(roomList_temp.size() == 0);
-
-      System.out.println("Type the RoomID");
-      booking.setRoomID(validateRoomID());
-
-      bookingList.add(booking);
-
-      BufferedWriter output = new BufferedWriter(new FileWriter("Booking.txt", true));
-
-      output.newLine();
-      output.write(bookingList.get(bookingList.size() - 1).toString());
-      output.close(); 
-   }
-   
-   public void setBookingGuestID(){
-      bookingList.get(bookingList.size()-1).setGuestID(guestList.get(guestList.size()-1).getID());
-   }  
-
-               //VALIDATIONS\\
-   
+   }   
    //Integers
    
    public int validateInput()  {
@@ -834,7 +907,7 @@ public class Repository {
       
       while(endDate.before(startDate))  {
          System.out.println("Wrong input, the EndDate has to be after the StartDate.");
-         endDate = new SimpleDateFormat("dd/MM/yyyy").parse(console.next());
+         endDate = new SimpleDateFormat("dd-MM-yy hh:mm").parse(console.next());
       }
       return endDate;
    }
@@ -880,23 +953,51 @@ public class Repository {
       return false;
    }
    
-   //Is the ID in the roomList_temp?
+   //Where is the ID in the roomList_temp?
    
    public int validateRoomID() {
       int input = validateInput();
-      boolean ok = isInRoomTempArray(input);
+      boolean ok = isInRoomTempCreateArray(input);
 
       while(!ok)  {
         System.out.println("You can only choose between the listed IDs");
         input = validateInput(); 
-        ok = isInRoomTempArray(input);
+        ok = isInRoomTempCreateArray(input);
+    
       }
       return input;
    }
    
-   public boolean isInRoomTempArray(int input) {
-      for(int i = 0; i < roomList_temp.size(); i++)  {
-         if(roomList_temp.get(i).getID() == input)   {
+   //Is the ID in the roomList_temp?
+   
+   public boolean isInRoomTempCreateArray(int input) {
+      for(int i = 0; i < roomList_tempCreate.size(); i++)  {
+         if(roomList_tempCreate.get(i).getID() == input)   {
+            return true;
+         }
+      }
+      return false;
+   }
+   
+   //Where is the ID in the staffList_temp?  
+   
+   public int whereInsideBookingTempArray() {
+      int input = validateInput();
+      boolean ok = isInBookingTempArray(input);
+      
+      while(!ok)  {
+        System.out.println("You can only choose between the listed IDs");
+        input = validateInput(); 
+        ok = isInBookingTempArray(input);
+      }
+      return input;
+   }
+   
+   //Is the ID in the bookingList_temp?
+   
+   public boolean isInBookingTempArray(int input) {
+      for(int i = 0; i < bookingList_temp.size(); i++)  {
+         if(bookingList_temp.get(i).getGuestID() == input)   {
             return true;
          }
       }
@@ -961,5 +1062,3 @@ public class Repository {
       boolean successful = tempFile.renameTo(inputFile);
    }
 }
-   
-

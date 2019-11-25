@@ -73,4 +73,8 @@ public class Guest {
       System.out.printf("%-5d%-15s%-15s%-15s%-15s%n",ID,firstName,
                         lastName,address,phoneNumber);
    }
+   
+   public void displayNameAndPhoneNumber()   {        //Only used when we display bookings to console
+      System.out.printf("%-15s%-10s%n",firstName,phoneNumber);      
+   }
 }

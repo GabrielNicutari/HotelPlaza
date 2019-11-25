@@ -1,2 +1,2 @@
-1     Oskar     Tuska     fda     32523
-2     Faisal     Fawzi     2easd     2352
+1     Frederik     Ottosen     Nyvej 12D     23663512
+2     Gabriel     Nicutari     Gronjordsvej 1     265235

@@ -161,8 +161,7 @@ public class Menu {
             printEmptyLines();
             continue;
          }
-            
-            
+                
          System.out.println("Choose an option: ");
          System.out.println("[1] Update");
          System.out.println("[2] Delete");
@@ -730,44 +729,97 @@ public class Menu {
    
    public void searchBooking()   throws IOException, InterruptedException  {
       String choice = "-1";
+      boolean repeat = true;
+      boolean updated = false;
+      boolean found = true;
+      
       do {
          System.out.println("SEARCH BOOKING MENU");
          System.out.println("****************************");
-         System.out.println("");
          
-         //repo.searchBooking();
-         //chooseBookingFilter();      //Probably not
+         if(repeat)  {
+            System.out.println("Type the <First Name>, the <Phone Number> or the <Room Number> corresponding to the booking");
+            found = repo.searchBooking();
+         }
+        
+         if(!found)  {
+            printEmptyLines();
+            continue;
+         } 
          
          System.out.println("Choose an option: ");
-         System.out.println("[1] Further filter");    //Probably not
-         System.out.println("[2] Update");
-         System.out.println("[3] Delete");
-         System.out.println("[4] Go Back");
+         System.out.println("[1] Renew");    //Delete and Create a new one
+         System.out.println("[2] Delete");
+         System.out.println("[3] Go Back");
          System.out.println("============================");
          
          choice = br.readLine();
          
          switch(choice) {
             case "1":
+               
+               //renewBooking();
+               repeat = false;
+               updated = true;
+               printEmptyLines();
+               break;
+               
+            case "2":
             
-               // goes through the loop again
+               //repeat = repo.deleteBooking();   //also guest
+               updated = true;
+               printEmptyLines();
+               break;
+               
+            case "3":
+               break;
+                       
+            default:
+               printEmptyLines();
+               System.out.println("Choice must be a value between \"1\" and \"3\".");
+               printEmptyLines();
+               Thread.sleep(1000);
+         }
+      }while(!choice.equals("3"));
+   }
+   
+   public void updateBooking()  throws IOException, InterruptedException   {      
+      System.out.println("Type the <ID> of the staff member you want to modify ");
+      int toUpdate = repo.whereInsideBookingTempArray();      //toUpdate is the index in the main ArrayList
+                                                //but we only check the IDs in the temp ArrayList                               
+      String choice = "-1";                     //in order to restrict the user from randomly selecting IDs
+      do {
+          System.out.println();
+          System.out.println("Choose what to modify: ");
+          System.out.println("[1] Start Date ");
+          System.out.println("[2] End Date");
+          System.out.println("[3] Everything");
+          System.out.println("[4] Go Back");
+               
+          choice = br.readLine();
+          
+          switch(choice) {
+            case "1":
+            
+               printEmptyLines();
+               //repo.updateBooking(toUpdate,"startDate");
+               printEmptyLines();
                break;
                
             case "2":
             
                printEmptyLines();
-               //repo.updateBooking();
+               //repo.updateStaff(toUpdate,"endDate");
                printEmptyLines();
-               
                break;
+               
             case "3":
             
                printEmptyLines();
-               //repo.deleteBooking();
-               //repo.deleteGuest();
+               //repo.updateStaff(toUpdate,"everything");
                printEmptyLines();
-               
                break;
+               
             case "4":
                break;
                
@@ -776,8 +828,8 @@ public class Menu {
                System.out.println("Choice must be a value between \"1\" and \"4\".");
                printEmptyLines();
                Thread.sleep(1000);
-         }
-      }while(!choice.equals("4"));
+          }
+      }  while(!choice.equals("4"));
    }             
    
             //VALIDATIONS\\
