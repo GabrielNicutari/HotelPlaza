@@ -70,7 +70,7 @@ public class Guest {
    }  
    
    public void displayAlligned() {     //Only used when we print to console
-      System.out.printf("%-5d%-15s%-15s%-15s%-15s%n",ID,firstName,
+      System.out.printf("%-5d%-15s%-15s%-25s%-15s%n",ID,firstName,
                         lastName,address,phoneNumber);
    }
    

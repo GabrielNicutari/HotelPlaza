@@ -571,7 +571,7 @@ public class Repository {
    public void displayGuest() throws IOException {
       System.out.println("Guest overview");
       
-      System.out.printf("%-5s%-15s%-15s%-15s%-15s%n","ID","First Name",
+      System.out.printf("%-5s%-15s%-15s%-25s%-15s%n","ID","First Name",
                         "Last Name","Adress","Phone number");
       System.out.println("------------------------------------------------------------------------------------------------------------------------------");
       
@@ -744,7 +744,7 @@ public class Repository {
    
    public void displayBooking() throws IOException {
       
-     System.out.printf("%-5s%-15s%-15s%-15s%-15s%-10s%n","ID","Room Number",
+     System.out.printf("%-5s%-15s%-20s%-20s%-15s%-10s%n","ID","Room Number",
                         "Start Date","End Date","First Name","Phone number");
      System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------");
       for (int i = 0; i < bookingList.size(); i++) {

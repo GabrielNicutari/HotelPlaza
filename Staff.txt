@@ -1,4 +1,3 @@
-1     Faisal     Fawzi Jarkass     Teacher     adsf     2342     12351326     20     233     
-2     Oskar     Tuska     asdfan     234kasdf     235     235     34     9000
-3     James     Hindsgavl Brink     asdgadg     asdasg     325235     23523     235     32532
-4     Idk     asd     adfg     asdg     36346     123411-1366     8     5
+1     Faisal     Jarkass     Administrator     Nyvej 13     23123212     290797-0000     37     14500
+2     Jennie     Clark     Receptionist     Norrebro 27     78905643     270897-1234     32     13000
+3     Anne Marie     Lee     Idk     Vesterbro     20304056     120398-3456     28     1000
